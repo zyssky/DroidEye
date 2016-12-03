@@ -7,11 +7,11 @@ import android.widget.Toast;
  * Created by Administrator on 2016/12/3.
  */
 
-public class ProcessHandler implements View.OnClickListener {
+public class MainController implements View.OnClickListener {
     private MainView view;
     private InteractionListener listener;
 
-    public ProcessHandler(MainView view,InteractionListener listener){
+    public MainController(MainView view, InteractionListener listener){
         this.view = view;
         this.listener = listener;
         initValuesOnView();

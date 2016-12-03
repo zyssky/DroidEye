@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity implements InteractionListen
         setContentView(R.layout.activity_main);
         MainView mainView = (MainView) findViewById(R.id.activity_main);
         mainView.init();
-        ProcessHandler processHandler = new ProcessHandler(mainView,this);
+        MainController mainController = new MainController(mainView,this);
     }
 
     @Override
