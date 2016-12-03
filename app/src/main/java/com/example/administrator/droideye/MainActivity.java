@@ -13,10 +13,12 @@ public class MainActivity extends AppCompatActivity implements InteractionListen
         MainView mainView = (MainView) findViewById(R.id.activity_main);
         mainView.init();
         MainController mainController = new MainController(mainView,this);
+
+
     }
 
     @Override
     public Context getContext() {
-        return this;
+        return getApplicationContext();
     }
 }

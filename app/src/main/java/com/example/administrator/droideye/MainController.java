@@ -19,10 +19,16 @@ public class MainController implements View.OnClickListener {
 
     void initValuesOnView(){
         view.setTestBtnListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(listener.getContext(),"start your test ! ",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(listener.getContext(),"start your test ! ",Toast.LENGTH_SHORT).show();
+        ProcessHandler processHandler = new ProcessHandler(listener);
+        processHandler.getRunningApps();
+//        processHandler.killProcess("com.example.administrator.schedule");
+//        processHandler.getRunningServices();
+        processHandler.getInstalledAppInfoList();
     }
 }
