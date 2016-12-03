@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity implements InteractionListen
         mainView.init();
         MainController mainController = new MainController(mainView,this);
 
-
     }
 
     @Override

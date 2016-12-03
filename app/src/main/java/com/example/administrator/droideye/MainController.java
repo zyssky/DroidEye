@@ -1,5 +1,6 @@
 package com.example.administrator.droideye;
 
+import android.app.ActivityManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,11 +25,9 @@ public class MainController implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-//        Toast.makeText(listener.getContext(),"start your test ! ",Toast.LENGTH_SHORT).show();
-        ProcessHandler processHandler = new ProcessHandler(listener);
-        processHandler.getRunningApps();
-//        processHandler.killProcess("com.example.administrator.schedule");
-//        processHandler.getRunningServices();
-        processHandler.getInstalledAppInfoList();
+
+        Toast.makeText(listener.getContext(),"start your test ! ",Toast.LENGTH_SHORT).show();
+//        ActivityManager activityManager = listener.getContext().getSystemService();
+
     }
 }

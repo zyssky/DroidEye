@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.administrator.droideye.TrafficInsView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/showtrafficview"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:text="ShowTraffic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/showtraffic" />
+</com.example.administrator.droideye.TrafficInsView>
