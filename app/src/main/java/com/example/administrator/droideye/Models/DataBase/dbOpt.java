@@ -29,17 +29,7 @@ public class dbOpt {
     }
 
     //Insert Mods:
-    public void add_user(User user){
-
-        try{
-            db.execSQL("INSERT INTO user(username,userpass,point,first_sign) values(?,?,?,?)",
-                    new Object[]{user.username, user.userpass, user.point, user.first_sign});
-        }catch(Exception e){
-            Log.d(Configuration.db_error_log_head, e.toString());
-            Toast.makeText(mContext,"Adding User Failed.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
+    //Waiting to be finish here.
 
     //Delete Mods:
     public void delete_func(String tablename, String column_name, String evalue){
@@ -104,13 +94,7 @@ public class dbOpt {
                         cursor = db.rawQuery("SELECT * FROM user", null);
                         while (cursor.moveToNext()) {
 
-                            User user = new User();
-                            user.user_id = cursor.getInt(0);
-                            user.username = cursor.getString(1);
-                            user.userpass = cursor.getString(2);
-                            user.point = cursor.getInt(3);
-                            user.first_sign = cursor.getString(4);
-                            ret.add(user);
+
                         }
                         cursor.close();
                         return ret;
@@ -129,13 +113,7 @@ public class dbOpt {
                         cursor = db.rawQuery("SELECT * FROM user " + " WHERE " + query_column + " =?", new String[]{value});
                         while (cursor.moveToNext()) {
 
-                            User user = new User();
-                            user.user_id = cursor.getInt(0);
-                            user.username = cursor.getString(1);
-                            user.userpass = cursor.getString(2);
-                            user.point = cursor.getInt(3);
-                            user.first_sign = cursor.getString(4);
-                            ret.add(user);
+
                         }
                         cursor.close();
                         return ret;
@@ -169,13 +147,7 @@ public class dbOpt {
                         cursor = db.rawQuery(Query_SQL, values);
                         while(cursor.moveToNext()){
 
-                            User user = new User();
-                            user.user_id = cursor.getInt(0);
-                            user.username = cursor.getString(1);
-                            user.userpass = cursor.getString(2);
-                            user.point = cursor.getInt(3);
-                            user.first_sign = cursor.getString(4);
-                            ret.add(user);
+
                         }
                         cursor.close();
                         return ret;
