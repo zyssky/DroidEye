@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import static com.example.administrator.droideye.Models.Configuration.create_appinfo;
 import static com.example.administrator.droideye.Models.Configuration.create_traffic;
 
 
@@ -32,6 +33,7 @@ public class SQLite extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db){
 
+        db.execSQL(create_appinfo);
         db.execSQL(create_traffic);
         //Show Debug Info
         Toast.makeText(mContext, "Create Tables Succeed.", Toast.LENGTH_SHORT).show();

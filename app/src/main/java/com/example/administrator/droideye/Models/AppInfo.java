@@ -1,16 +1,15 @@
 package com.example.administrator.droideye.Models;
 
 /**
- * Created by wand on 2016/12/4.
+ * Created by wand on 2016/12/5.
  */
 
-public class Traffic implements DbOpts{
+public class AppInfo implements DbOpts{
 
-    //Characters in Traffic
+    //Characters
 
 
-    //Because this model may be alittle complicated
-    //So using self-defined Db Operators.
+    //Dbopts
     @Override
     public void insert_model(){
 
@@ -30,5 +29,4 @@ public class Traffic implements DbOpts{
     public void query_model(){
 
     }
-
 }

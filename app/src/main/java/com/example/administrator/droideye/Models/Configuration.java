@@ -6,6 +6,7 @@ package com.example.administrator.droideye.Models;
 
 public class Configuration {
 
+
     //SQLiteDataBase Relevant Settings
     public static final String db_name          = "DroidEye.db";
     public static final String create_header    = "CREATE TABLE IF NOT EXISTS ";
@@ -33,4 +34,23 @@ public class Configuration {
             "KILLORWARN3      INTEGER  " +
             ");";
     //
+
+    public static final String create_appinfo = create_header + "appinfo(" +
+            "appName TEXT PRIMARY KEY , "     +
+            "packageName TEXT ,         "     +
+            "appIcon     TEXT ,         "     +
+            "InstallTime TEXT ,         "     +
+            "privileges  TEXT ,         "     +
+            "visitedurls TEXT ,         "     +
+            "secinfo     TEXT ,         "     + //Hasn't thinking enough yet.
+            "SD_Place    TEXT           "     +
+            ");";
+
+
+    //Logs Path , all should be moved to SDCard Positions.
+    public static final String basiclogpath  = "DriodEyelog";
+    public static final String actionlogpath = basiclogpath + "/" + "action_logs";
+    public static final String netflowlogpath= basiclogpath + "/" + "newflow_logs";
+    public static final String storagelogpath= basiclogpath + "/" + "store_logs";
+
 }
