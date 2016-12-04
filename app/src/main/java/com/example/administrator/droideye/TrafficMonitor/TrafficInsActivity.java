@@ -1,8 +1,10 @@
-package com.example.administrator.droideye;
+package com.example.administrator.droideye.TrafficMonitor;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.administrator.droideye.R;
 
 /**
  * Created by wand on 2016/12/3.

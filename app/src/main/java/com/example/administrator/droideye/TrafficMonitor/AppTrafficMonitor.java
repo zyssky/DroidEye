@@ -1,4 +1,4 @@
-package com.example.administrator.droideye;
+package com.example.administrator.droideye.TrafficMonitor;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,13 +16,13 @@ import java.util.Map;
  * Created by wand on 2016/12/3.
  */
 
-public class getAppTraffics {
+public class AppTrafficMonitor {
 
     //Who implements the interface must be a activity context.
     private TrafficInsListener listener;
     private PackageManager packageManager;
     private FileUtils fileutil;
-    public getAppTraffics(TrafficInsListener listener){
+    public AppTrafficMonitor(TrafficInsListener listener){
 
         this.listener = listener;
         this.fileutil = new FileUtils();
@@ -35,7 +35,7 @@ public class getAppTraffics {
         for (PackageInfo app : usingNetPackages){
             Log.d("[*]UsingInternet", app.applicationInfo.loadLabel(packageManager)+"");
         }
-        List<Map> statics = new ArrayList<Map>();
+        List<Map> statistics = new ArrayList<Map>();
 
     }
 

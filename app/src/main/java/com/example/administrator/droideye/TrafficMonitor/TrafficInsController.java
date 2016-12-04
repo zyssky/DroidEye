@@ -1,8 +1,6 @@
-package com.example.administrator.droideye;
+package com.example.administrator.droideye.TrafficMonitor;
 
-import android.content.Context;
 import android.view.View;
-import android.widget.Toast;
 
 /**
  * Created by wand on 2016/12/3.
@@ -29,7 +27,7 @@ public class TrafficInsController implements View.OnClickListener{
 
         //Test Our Class here.
         //Toast.makeText(listener.getAppContext(),"start your test ! ",Toast.LENGTH_SHORT).show();
-        getAppTraffics trafficMonit = new getAppTraffics(listener);
-        trafficMonit.trafficmonitor();
+        AppTrafficMonitor trafficMonitor = new AppTrafficMonitor(listener);
+        trafficMonitor.trafficmonitor();
     }
 }
