@@ -2,10 +2,15 @@ package com.example.administrator.droideye.TrafficMonitor;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 
 import com.example.administrator.droideye.R;
+
+import java.util.List;
 
 /**
  * Created by wand on 2016/12/3.
@@ -13,7 +18,8 @@ import com.example.administrator.droideye.R;
 
 public class TrafficInsView extends RelativeLayout{
 
-    private Button showtraffic;
+
+    private ListView trafficList;
 
     public TrafficInsView(Context context, AttributeSet attrs) {
 
@@ -22,11 +28,16 @@ public class TrafficInsView extends RelativeLayout{
 
     public void init(){
 
-        showtraffic = (Button)findViewById(R.id.showtraffic);
+        trafficList = (ListView)findViewById(R.id.trafficList);
     }
 
-    public void setShowtrafficBtnListener(OnClickListener listener){
+    public void setTrafficListViewAdapter(SimpleAdapter simpleadapter){
 
-        showtraffic.setOnClickListener(listener);
+        trafficList.setAdapter(simpleadapter);
+    }
+
+    public void setTrafficListListener(AdapterView.OnItemClickListener listener){
+
+        trafficList.setOnItemClickListener(listener);
     }
 }

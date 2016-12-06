@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by wand on 2016/12/3.
@@ -22,21 +23,29 @@ public class AppTrafficMonitor {
     private TrafficInsListener listener;
     private PackageManager packageManager;
     private FileUtils fileutil;
+
     public AppTrafficMonitor(TrafficInsListener listener){
 
         this.listener = listener;
         this.fileutil = new FileUtils();
+        this.packageManager = listener.getAppContext().getPackageManager();
     }
 
-    public void trafficmonitor(){
+    public List<HashMap<String,Object>> showApps(){
 
-        packageManager = listener.getAppContext().getPackageManager();
+        List<HashMap<String,Object>> res = new ArrayList<HashMap<String, Object>>();
         List<PackageInfo> usingNetPackages = requireNetPackages(packageManager);
         for (PackageInfo app : usingNetPackages){
-            Log.d("[*]UsingInternet", app.applicationInfo.loadLabel(packageManager)+"");
+            if(app.applicationInfo.loadLabel(packageManager).length()>25)
+                continue;
+//            Log.d("[*]UsingInternet", app.applicationInfo.loadLabel(packageManager)+"");
+            HashMap<String,Object> item = new HashMap<String,Object>();
+            item.put("AppIcon",app.applicationInfo.loadIcon(packageManager));
+            item.put("AppName",app.applicationInfo.loadLabel(packageManager));
+            item.put("traffic","5KB");
+            res.add(item);
         }
-        List<Map> statistics = new ArrayList<Map>();
-
+        return res;
     }
 
 
