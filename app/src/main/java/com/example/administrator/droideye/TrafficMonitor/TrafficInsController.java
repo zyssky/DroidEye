@@ -1,13 +1,17 @@
 package com.example.administrator.droideye.TrafficMonitor;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.administrator.droideye.R;
+import com.example.administrator.droideye.Utils.ViewAux.ViewAnimation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +27,7 @@ public class TrafficInsController implements View.OnClickListener,AdapterView.On
     private TrafficInsListener listener;
     private List<HashMap<String,Object>> trafficItems = new ArrayList<HashMap<String, Object>>();
     private SimpleAdapter trafficAdapter;
+    int counter = 0;
 
     public TrafficInsController(TrafficInsView view , TrafficInsListener listener){
 
@@ -55,6 +60,7 @@ public class TrafficInsController implements View.OnClickListener,AdapterView.On
 
     public void initsValueOnView(){
 
+        this.view.setImageBtnClickListener(this);
         this.view.setTrafficListViewAdapter(trafficAdapter);
         this.view.setTrafficListListener(this);
     }
@@ -66,7 +72,24 @@ public class TrafficInsController implements View.OnClickListener,AdapterView.On
         //Toast.makeText(listener.getAppContext(),"start your test ! ",Toast.LENGTH_SHORT).show();
         //AppTrafficMonitor trafficMonitor = new AppTrafficMonitor(listener);
         //trafficMonitor.trafficmonitor();
+        switch (v.getId()){
 
+            case R.id.rudder:
+                if (counter%2 == 0)
+                {
+                    ViewAnimation.Rotation_Animation(view.menuButton,700,0,90);
+                    counter ++;
+                }
+                else{
+                    ViewAnimation.Rotation_Animation(view.menuButton,700,90,0);
+                    counter ++;
+                }
+                Toast.makeText(listener.getAppContext(),"This is a simple test.",Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                Toast.makeText(listener.getAppContext(),"Listener Doesn't find target item.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

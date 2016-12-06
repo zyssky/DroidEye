@@ -42,7 +42,7 @@ public class AppTrafficMonitor {
             HashMap<String,Object> item = new HashMap<String,Object>();
             item.put("AppIcon",app.applicationInfo.loadIcon(packageManager));
             item.put("AppName",app.applicationInfo.loadLabel(packageManager));
-            item.put("traffic","5KB");
+            item.put("traffic","0KB");
             res.add(item);
         }
         return res;

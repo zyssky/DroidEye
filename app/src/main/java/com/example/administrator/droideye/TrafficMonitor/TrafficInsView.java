@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class TrafficInsView extends RelativeLayout{
 
-
+    public ImageButton menuButton;
     private ListView trafficList;
 
     public TrafficInsView(Context context, AttributeSet attrs) {
@@ -28,7 +29,13 @@ public class TrafficInsView extends RelativeLayout{
 
     public void init(){
 
+        menuButton  = (ImageButton)findViewById(R.id.rudder);
         trafficList = (ListView)findViewById(R.id.trafficList);
+    }
+
+    public void setImageBtnClickListener(OnClickListener listener){
+
+        menuButton.setOnClickListener(listener);
     }
 
     public void setTrafficListViewAdapter(SimpleAdapter simpleadapter){
