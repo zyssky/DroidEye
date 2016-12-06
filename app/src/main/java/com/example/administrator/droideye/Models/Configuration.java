@@ -21,8 +21,8 @@ public class Configuration {
             "fiveMinTrafficout  TEXT , " +
             "oneMinTrafficin    TEXT , " +
             "oneMinTrafficout   TEXT , " +
-            "30sTrafficin       TEXT , " +
-            "30sTrafficout      TEXT , " +
+            "_30sTrafficin      TEXT , " +
+            "_30sTrafficout     TEXT , " +
             "LimitCycle1        TEXT , " +
             "LimitTrafficQuant1 TEXT , " +
             "LimitCycle2        TEXT , " +
@@ -31,7 +31,8 @@ public class Configuration {
             "LimitTrafficQuant3 TEXT , " +
             "KILLORWARN1      INTEGER, " +
             "KILLORWARN2      INTEGER, " +
-            "KILLORWARN3      INTEGER  " +
+            "KILLORWARN3      INTEGER, " +
+            "FOREIGN KEY(appName) REFERENCES appinfo(appName)" +
             ");";
     //
 

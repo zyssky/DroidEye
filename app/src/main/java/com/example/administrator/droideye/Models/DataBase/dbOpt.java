@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.administrator.droideye.Models.AppInfo;
 import com.example.administrator.droideye.Models.Configuration;
+import com.example.administrator.droideye.Models.Traffic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,118 +21,152 @@ public class dbOpt {
 
     //Init Database At the beginning of the program.
     public SQLite dbOperator;
-    public static Context mContext;
     private SQLiteDatabase db = null;
-    public dbOpt(){
+    private Context mContext;
+    public dbOpt(Context mContext){
 
+        this.mContext = mContext;
         dbOperator = new SQLite(mContext, Configuration.db_name,null ,1);
         //Really Create Database:
         db = dbOperator.getReadableDatabase();
     }
 
-    //Insert Mods:
-    //Waiting to be finish here.
-
-    //Delete Mods:
-    public void delete_func(String tablename, String column_name, String evalue){
+    //User-def Mod:
+    public boolean EXEC_SQL(String _SQL, String[] values){
 
         try{
-            db.execSQL("DELETE FROM " + tablename + " WHERE " + column_name + " =?" , new Object[]{evalue});
-        }catch(Exception e){
-            Log.d(Configuration.db_error_log_head,e.toString());
-            Toast.makeText(mContext,"Deleting " + column_name + " in " + tablename + " Failed.", Toast.LENGTH_SHORT).show();
+            db.execSQL(_SQL,values);
+            return true;
+        }catch (Exception e){
+            Log.d(Configuration.db_error_log_head, e.toString());
+            Toast.makeText(mContext,"EXEC " + _SQL + " failed.", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
-    public void delete_all(String tablename){
+    //Default Insert Mod:
+    public boolean add_appinfo(AppInfo appInfo){
+
+        try{
+            db.execSQL("INSERT INTO appinfo(appName," +
+                    "packageName," +
+                    "appIcon," +
+                    "InstallTime," +
+                    "privileges," +
+                    "visitedurls," +
+                    "secinfo," +
+                    "SD_Place)" +
+                    " values(?,?,?,?,?,?,?,?)", new Object[]{appInfo.appName,
+                    appInfo.packageName,
+                    appInfo.appIcon,
+                    appInfo.InstallTime,
+                    appInfo.privileges,
+                    appInfo.visitedurls,
+                    appInfo.secinfo,
+                    appInfo.SD_Place});
+            return true;
+        }catch (Exception e){
+            Log.d(Configuration.db_error_log_head, e.toString());
+            return false;
+        }
+    }
+
+    public boolean add_traffic(Traffic traffic){
+        try{
+            db.execSQL("INSERT INTO traffic(appName," +
+                    "startTime," +
+                    "totalTraffic," +
+                    "tenMinTrafficin," +
+                    "tenMinTrafficout," +
+                    "fiveMinTrafficin," +
+                    "fiveMinTrafficout," +
+                    "oneMinTrafficin," +
+                    "oneMinTrafficout," +
+                    "_30sTrafficin," +
+                    "_30sTrafficout," +
+                    "LimitCycle1," +
+                    "LimitTrafficQuant1," +
+                    "LimitCycle2," +
+                    "LimitTrafficQuant2," +
+                    "LimitCycle3," +
+                    "LimitTrafficQuant3," +
+                    "KILLORWARN1," +
+                    "KILLORWARN2," +
+                    "KILLORWARN3)" +
+                    " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    new Object[]{
+
+                            traffic.appName,
+                            traffic.startTime,
+                            traffic.totalTraffic,
+                            traffic.tenMinTrafficin,
+                            traffic.tenMinTrafficout,
+                            traffic.fiveMinTrafficin,
+                            traffic.fiveMinTrafficout,
+                            traffic.oneMinTrafficin,
+                            traffic.oneMinTrafficout,
+                            traffic._30sTrafficin,
+                            traffic._30sTrafficout,
+                            traffic.LimitCycle1,
+                            traffic.LimitTrafficQuant1,
+                            traffic.LimitCycle2,
+                            traffic.LimitTrafficQuant2,
+                            traffic.LimitCycle3,
+                            traffic.LimitTrafficQuant3,
+                            traffic.KILLORWARN1,
+                            traffic.KILLORWARN2,
+                            traffic.KILLORWARN3
+                    }
+            );
+            return true;
+        }catch (Exception e){
+            Log.d(Configuration.db_error_log_head, e.toString());
+            return false;
+        }
+    }
+
+    //Delete Mods:
+    public boolean delete_func(String tablename, String column_name, String evalue){
+
+        try{
+            db.execSQL("DELETE FROM " + tablename + " WHERE " + column_name + " =?" , new Object[]{evalue});
+            return true;
+        }catch(Exception e){
+            Log.d(Configuration.db_error_log_head,e.toString());
+            Toast.makeText(mContext,"Deleting " + column_name + " in " + tablename + " Failed.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    public boolean delete_all(String tablename){
         //Invoke with Cautious!
         //Will empty whole table.
         try{
             db.execSQL("DELETE FROM " + tablename);
+            return true;
         }catch(Exception e){
             Log.d(Configuration.db_error_log_head,e.toString());
             Toast.makeText(mContext,"Deleteing Table " + tablename + " Failed.", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
 
-
     //Update Mods:
-    public void update_table(String table_name, String column_name, String condition_column,String oldvalue, String newvalue){
+    public boolean update_table(String table_name, String column_name, String condition_column,String oldvalue, String newvalue){
 
         try{
 
             db.execSQL("UPDATE " + table_name + " SET " + column_name + " =? " + "WHERE " + condition_column + " =?",
                     new Object[]{newvalue,oldvalue});
+            return true;
         }catch(Exception e){
             Log.d(Configuration.db_error_log_head,e.toString());
             Toast.makeText(mContext,"Updating Table " + table_name + " Failed.", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
-    public void userdef_update(String update_SQL, String[] values){
-
-        try{
-            db.execSQL(update_SQL,values);
-
-        }catch(Exception e){
-            Log.d(Configuration.db_error_log_head, e.toString());
-            Toast.makeText(mContext,"Updating Table " + " Failed.", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    //Basic - Query Mods:
-    public List<Object> query_info(String table_name, String query_column, String value){
-
-        List<Object> ret = new ArrayList<Object>();
-        try {
-            if (query_column.length() == 0) {
-                //Query-all
-                Cursor cursor = null;
-                switch (table_name) {
-
-                    case "user":
-                        cursor = db.rawQuery("SELECT * FROM user", null);
-                        while (cursor.moveToNext()) {
-
-
-                        }
-                        cursor.close();
-                        return ret;
-
-                    default:
-
-                        Log.d(Configuration.db_error_log_head, "Query With Wrong Table Name: " + table_name);
-                        return null;
-                }
-
-            } else {
-                Cursor cursor = null;
-                switch (table_name) {
-
-                    case "user":
-                        cursor = db.rawQuery("SELECT * FROM user " + " WHERE " + query_column + " =?", new String[]{value});
-                        while (cursor.moveToNext()) {
-
-
-                        }
-                        cursor.close();
-                        return ret;
-
-                    default:
-
-                        Log.d(Configuration.db_error_log_head, "Query With Wrong Table Name: " + table_name);
-                        return null;
-                }
-            }
-        }
-        catch(Exception e){
-            Log.d(Configuration.db_error_log_head,e.toString());
-            Toast.makeText(mContext,"Query-Info At User Table Failed.", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-    }
 
     //Self-DEFINED Query Func---
     public List<Object> userdef_query(String table_name, String Query_SQL, String[] values){
@@ -140,17 +176,27 @@ public class dbOpt {
         try {
             Cursor cursor = null;
 
-
                 switch (table_name) {
 
-                    case "user":
+                    case "appinfo":
                         cursor = db.rawQuery(Query_SQL, values);
                         while(cursor.moveToNext()){
 
-
+                            AppInfo appinfo = new AppInfo();
+                            ret.add(appinfo);
                         }
                         cursor.close();
                         return ret;
+                    case "traffic":
+                        cursor = db.rawQuery(Query_SQL, values);
+                        while (cursor.moveToNext()){
+
+                            Traffic traffic = new Traffic();
+                            ret.add(traffic);
+                        }
+                        cursor.close();
+                        return ret;
+
 
                     default:
 
@@ -164,8 +210,12 @@ public class dbOpt {
         }
     }
 
-    public void close_db(){
-
-        db.close();
+    public boolean close_db(){
+        try {
+            db.close();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

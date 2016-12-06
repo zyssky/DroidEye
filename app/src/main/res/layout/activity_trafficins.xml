@@ -7,8 +7,20 @@
 
     <Button
         android:text="ShowTraffic"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/showtraffic" />
+        android:id="@+id/showtraffic"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="8dip"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_below="@id/showtraffic"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:layout_marginBottom="12dip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </com.example.administrator.droideye.TrafficMonitor.TrafficInsView>
