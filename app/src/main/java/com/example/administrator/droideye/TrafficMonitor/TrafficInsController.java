@@ -77,11 +77,11 @@ public class TrafficInsController implements View.OnClickListener,AdapterView.On
             case R.id.rudder:
                 if (counter%2 == 0)
                 {
-                    ViewAnimation.Rotation_Animation(view.menuButton,700,0,90);
+                    ViewAnimation.Rotation_Animation(view.menuButton,700,0,-90);
                     counter ++;
                 }
                 else{
-                    ViewAnimation.Rotation_Animation(view.menuButton,700,90,0);
+                    ViewAnimation.Rotation_Animation(view.menuButton,700,-90,0);
                     counter ++;
                 }
                 Toast.makeText(listener.getAppContext(),"This is a simple test.",Toast.LENGTH_SHORT).show();
@@ -99,14 +99,4 @@ public class TrafficInsController implements View.OnClickListener,AdapterView.On
         Toast.makeText(listener.getAppContext(), "Entering Number " + pos, Toast.LENGTH_SHORT).show();
     }
 
-    public void test(){
-
-        for (int i = 0 ; i < 10; i++){
-            HashMap<String , Object> temp = new HashMap<>();
-            temp.put("AppIcon",R.drawable.eye);
-            temp.put("AppName","AppTraffic");
-            temp.put("traffic","5KB");
-            trafficItems.add(temp);
-        }
-    }
 }

@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
 import com.example.administrator.droideye.R;
+import com.example.administrator.droideye.Utils.ViewAux.ViewAnimation;
 
 import java.util.List;
 

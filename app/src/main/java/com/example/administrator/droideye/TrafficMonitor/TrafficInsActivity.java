@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 import com.example.administrator.droideye.R;
+import com.example.administrator.droideye.Utils.ViewAux.ViewAnimation;
 
 /**
  * Created by wand on 2016/12/3.
