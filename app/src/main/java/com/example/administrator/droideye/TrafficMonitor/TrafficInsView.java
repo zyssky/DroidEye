@@ -1,6 +1,7 @@
 package com.example.administrator.droideye.TrafficMonitor;
 
 import android.content.Context;
+import android.media.Image;
 import android.util.AttributeSet;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,7 +21,11 @@ import java.util.List;
 
 public class TrafficInsView extends RelativeLayout{
 
-    public ImageButton menuButton;
+    public  ImageButton menuButton;
+    private ImageButton tensbtn;
+    private ImageButton fivesbtn;
+    private ImageButton onesbtn;
+
     private ListView trafficList;
 
     public TrafficInsView(Context context, AttributeSet attrs) {
@@ -32,11 +37,18 @@ public class TrafficInsView extends RelativeLayout{
 
         menuButton  = (ImageButton)findViewById(R.id.rudder);
         trafficList = (ListView)findViewById(R.id.trafficList);
+        tensbtn     = (ImageButton)findViewById(R.id.ten);
+        fivesbtn     = (ImageButton)findViewById(R.id.five);
+        onesbtn     = (ImageButton)findViewById(R.id.one);
+
     }
 
     public void setImageBtnClickListener(OnClickListener listener){
 
         menuButton.setOnClickListener(listener);
+        tensbtn.setOnClickListener(listener);
+        fivesbtn.setOnClickListener(listener);
+        onesbtn.setOnClickListener(listener);
     }
 
     public void setTrafficListViewAdapter(SimpleAdapter simpleadapter){
@@ -48,4 +60,5 @@ public class TrafficInsView extends RelativeLayout{
 
         trafficList.setOnItemClickListener(listener);
     }
+
 }

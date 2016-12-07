@@ -31,8 +31,61 @@ public class Traffic{
     public String KILLORWARN3       = null;
 
 
-    //Because this model may be alittle complicated
-    //So using self-defined Db Operators.
+    //Simple Init Model
+    public Traffic(String appName, String startTime){
 
+        this.appName   = appName;
+        this.startTime = startTime;
+    }
 
+    public Traffic(String appName, String startTime, String totalTraffic){
+
+        this.appName        = appName;
+        this.startTime      = startTime;
+        this.totalTraffic   = totalTraffic;
+    }
+
+    public Traffic(String appName,
+                   String startTime,
+                   String totalTraffic,
+                   String tenMinTrafficin,
+                   String tenMinTrafficout,
+                   String fiveMinTrafficin,
+                   String fiveMinTrafficout,
+                   String oneMinTrafficin,
+                   String oneMinTrafficout,
+                   String _30sTrafficin,
+                   String _30sTrafficout,
+                   String LimitCycle1,
+                   String LimitTrafficQuant1,
+                   String LimitCycle2,
+                   String LimitTrafficQuant2,
+                   String LimitCycle3,
+                   String LimitTrafficQuant3,
+                   String KILLORWARN1,
+                   String KILLORWARN2,
+                   String KILLORWARN3)
+    {
+
+        this.appName                = appName;
+        this.startTime              = startTime;
+        this.totalTraffic           = totalTraffic;
+        this.tenMinTrafficin        = tenMinTrafficin;
+        this.tenMinTrafficout       = tenMinTrafficout;
+        this.fiveMinTrafficin       = fiveMinTrafficin;
+        this.fiveMinTrafficout      = fiveMinTrafficout;
+        this.oneMinTrafficin        = oneMinTrafficin;
+        this.oneMinTrafficout       = oneMinTrafficout;
+        this._30sTrafficin          = _30sTrafficin;
+        this._30sTrafficout         = _30sTrafficout;
+        this.LimitCycle1            = LimitCycle1;
+        this.LimitTrafficQuant1     = LimitTrafficQuant1;
+        this.LimitCycle2            = LimitCycle2;
+        this.LimitTrafficQuant2     = LimitTrafficQuant2;
+        this.LimitCycle3            = LimitCycle3;
+        this.LimitTrafficQuant3     = LimitTrafficQuant3;
+        this.KILLORWARN1            = KILLORWARN1;
+        this.KILLORWARN2            = KILLORWARN2;
+        this.KILLORWARN3            = KILLORWARN3;
+    }
 }

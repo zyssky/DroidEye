@@ -27,6 +27,7 @@
         android:layout_marginTop="8dip"
         android:layout_toRightOf="@id/rudder"
         android:layout_marginLeft="6dip"
+        android:layoutAnimation="@anim/anim_listview"
         android:src="@drawable/ten"
         />
 
@@ -39,6 +40,7 @@
         android:layout_marginTop="8dip"
         android:layout_toRightOf="@id/ten"
         android:layout_marginLeft="3dip"
+        android:layoutAnimation="@anim/anim_listview"
         android:src="@drawable/five"
         />
 
@@ -51,6 +53,7 @@
         android:layout_marginTop="8dip"
         android:layout_toRightOf="@id/five"
         android:layout_marginLeft="3dip"
+        android:layoutAnimation="@anim/anim_listview"
         android:src="@drawable/one"
         />
 

@@ -25,4 +25,14 @@ public class ViewAnimation {
         view.startAnimation(animation);
     }
 
+    public static void SlideIn(View view, long delay){
+
+
+    }
+
+    public static void SlideOut(View view, long delay){
+
+
+    }
+
 }

@@ -59,7 +59,7 @@ public class dbOpt {
                     " values(?,?,?,?,?,?,?,?)", new Object[]{appInfo.appName,
                     appInfo.packageName,
                     appInfo.appIcon,
-                    appInfo.InstallTime,
+                    appInfo.installTime,
                     appInfo.privileges,
                     appInfo.visitedurls,
                     appInfo.secinfo,
@@ -182,7 +182,7 @@ public class dbOpt {
                         cursor = db.rawQuery(Query_SQL, values);
                         while(cursor.moveToNext()){
 
-                            AppInfo appinfo = new AppInfo();
+                            AppInfo appinfo = null;
                             ret.add(appinfo);
                         }
                         cursor.close();
@@ -191,7 +191,7 @@ public class dbOpt {
                         cursor = db.rawQuery(Query_SQL, values);
                         while (cursor.moveToNext()){
 
-                            Traffic traffic = new Traffic();
+                            Traffic traffic = null;
                             ret.add(traffic);
                         }
                         cursor.close();

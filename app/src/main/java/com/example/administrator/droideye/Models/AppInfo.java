@@ -12,11 +12,39 @@ public class AppInfo{
     public String appName     = null;
     public String packageName = null;
     public String appIcon     = null;
-    public String InstallTime = null;
+    public String installTime = null;
     public String privileges  = null;
     public String visitedurls = null;
     public String secinfo     = null;
     public String SD_Place    = null;
-    //Dbopts
+
+    //Constructors
+
+    public AppInfo(String appName, String packageName ,String appIcon){
+
+        this.appName        = appName;
+        this.packageName    = packageName;
+        this.appIcon        = appIcon;
+    }
+
+    public AppInfo(String appName,
+                   String packageName,
+                   String appIcon,
+                   String installTime,
+                   String privileges,
+                   String visitedurls,
+                   String secinfo,
+                   String SD_Place)
+    {
+        this.appName            = appName;
+        this.packageName        = packageName;
+        this.appIcon            = appIcon;
+        this.installTime        = installTime;
+        this.privileges         = privileges;
+        this.visitedurls        = visitedurls;
+        this.secinfo            = secinfo;
+        this.SD_Place           = SD_Place;
+    }
+
 
 }

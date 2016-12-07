@@ -22,12 +22,10 @@ public class AppTrafficMonitor {
     //Who implements the interface must be a activity context.
     private TrafficInsListener listener;
     private PackageManager packageManager;
-    private FileUtils fileutil;
 
     public AppTrafficMonitor(TrafficInsListener listener){
 
         this.listener = listener;
-        this.fileutil = new FileUtils();
         this.packageManager = listener.getAppContext().getPackageManager();
     }
 
@@ -108,7 +106,7 @@ public class AppTrafficMonitor {
 
     public String formatprintTraffic(long traffic){
 
-        return fileutil.formatFileSize(listener.getAppContext(),traffic);
+        return FileUtils.formatFileSize(listener.getAppContext(),traffic);
     }
 
     public void staticTraffic(List<Map> statics, List<PackageInfo> usingNetPackages){

@@ -10,7 +10,6 @@ public class Configuration {
     //SQLiteDataBase Relevant Settings
     public static final String db_name          = "DroidEye.db";
     public static final String create_header    = "CREATE TABLE IF NOT EXISTS ";
-    public static final String db_error_log_head= "[*]DbError:";
     public static final String create_traffic   = create_header + "traffic(" +
             "appName TEXT PRIMARY KEY ," +
             "startTime          TEXT , " +
@@ -49,9 +48,16 @@ public class Configuration {
 
 
     //Logs Path , all should be moved to SDCard Positions.
-    public static final String basiclogpath  = "DriodEyelog";
-    public static final String actionlogpath = basiclogpath + "/" + "action_logs";
-    public static final String netflowlogpath= basiclogpath + "/" + "newflow_logs";
-    public static final String storagelogpath= basiclogpath + "/" + "store_logs";
+    public static final String basiclogpath     = "DriodEyelog";
+    public static final String actionlogpath    = basiclogpath + "/" + "action_logs";
+    public static final String netflowlogpath   = basiclogpath + "/" + "newflow_logs";
+    public static final String storagelogpath   = basiclogpath + "/" + "store_logs";
+    public static final String defaultFilePath  = "/data/data/com.example.administrator.droideye/files";
+
+
+    //Errors:
+    public static final String db_error_log_head= "[*]DbError:";
+    public static final String file_opt_error= "[*]FileOptError:";
+
 
 }

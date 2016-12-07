@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.administrator.droideye.Models.Configuration;
 import com.example.administrator.droideye.R;
+import com.example.administrator.droideye.Utils.FileUtils;
 import com.example.administrator.droideye.Utils.ViewAux.ViewAnimation;
 
 import java.util.ArrayList;
@@ -84,7 +86,22 @@ public class TrafficInsController implements View.OnClickListener,AdapterView.On
                     ViewAnimation.Rotation_Animation(view.menuButton,700,-90,0);
                     counter ++;
                 }
+                FileUtils.createFile("tester");
+                FileUtils.createFolder(Configuration.defaultFilePath,"/ABCDEFG");
+                FileUtils.createFolder("/system","/ABCDEFG");
                 Toast.makeText(listener.getAppContext(),"This is a simple test.",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.ten:
+
+                break;
+
+            case R.id.five:
+
+                break;
+
+            case R.id.one:
+
                 break;
 
             default:
