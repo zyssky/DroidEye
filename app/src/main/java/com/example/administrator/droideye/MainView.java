@@ -1,6 +1,7 @@
 package com.example.administrator.droideye;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -18,7 +19,6 @@ public class MainView extends RelativeLayout {
 
     public void init(){
         testBtn = (Button) findViewById(R.id.test);
-
     }
 
     public void setTestBtnListener(OnClickListener listener){
