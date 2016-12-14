@@ -16,12 +16,15 @@ public class MainView extends RelativeLayout {
     }
 
     private Button testBtn;
+    private Button showtraffic;
 
     public void init(){
         testBtn = (Button) findViewById(R.id.test);
+        showtraffic = (Button) findViewById(R.id.showtraffic);
     }
 
     public void setTestBtnListener(OnClickListener listener){
         testBtn.setOnClickListener(listener);
+        showtraffic.setOnClickListener(listener);
     }
 }
