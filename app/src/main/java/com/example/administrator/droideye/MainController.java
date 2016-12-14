@@ -26,8 +26,8 @@ public class MainController implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        Toast.makeText(listener.getContext(),"start your test ! ",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(listener.getContext(),"start your test ! ",Toast.LENGTH_SHORT).show();
 //        ActivityManager activityManager = listener.getContext().getSystemService();
-
+        new ProcessHandler(listener).getInstalledAppInfoList();
     }
 }
