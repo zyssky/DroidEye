@@ -58,6 +58,6 @@ public class Configuration {
     //Errors:
     public static final String db_error_log_head= "[*]DbError:";
     public static final String file_opt_error= "[*]FileOptError:";
-
+    public static final String click_listener_error= "[*]ListenerError:";
 
 }

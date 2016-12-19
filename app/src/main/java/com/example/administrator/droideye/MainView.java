@@ -21,14 +21,18 @@ public class MainView extends RelativeLayout {
 
     private Button testBtn;
     private ListView listView;
+    private Button showtraffic;
 
-    public void init(){
+    public void init() {
         testBtn = (Button) findViewById(R.id.test);
         listView = (ListView) findViewById(R.id.runningapplist);
+        showtraffic = (Button) findViewById(R.id.showtraffic);
     }
+
 
     public void setTestBtnListener(OnClickListener listener){
         testBtn.setOnClickListener(listener);
+        showtraffic.setOnClickListener(listener);
     }
 
     public void setListViewAdapter(SimpleAdapter adapter){
