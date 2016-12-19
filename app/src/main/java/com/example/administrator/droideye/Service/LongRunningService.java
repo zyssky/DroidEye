@@ -10,14 +10,13 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.util.Log;
 
 
 import static android.content.ContentValues.TAG;
 
 
 public class LongRunningService extends Service {
-
-
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -25,7 +24,7 @@ public class LongRunningService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        Log.d(TAG, "onStartCommand: !!!!!!!!!!!!!!!!!!!!!!!");
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -43,10 +42,10 @@ public class LongRunningService extends Service {
         super.onDestroy();
 
         //在Service结束后关闭AlarmManager
-        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent i = new Intent(this, AlarmReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
-        manager.cancel(pi);
+//        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//        Intent i = new Intent(this, AlarmReceiver.class);
+//        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
+//        manager.cancel(pi);
     }
 
 

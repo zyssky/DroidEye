@@ -11,6 +11,21 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file("./DroidEye.jks")
+            storePassword '123456'
+            keyAlias 'DroidEye'
+            keyPassword '123456'
+        }
+
+//        debug {
+//            storeFile file("./DroidEye.jks")
+//            storePassword '123456'
+//            keyAlias 'DroidEye'
+//            keyPassword '123456'
+//        }
+    }
     buildTypes {
         release {
             minifyEnabled false

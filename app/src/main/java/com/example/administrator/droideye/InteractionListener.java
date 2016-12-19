@@ -7,5 +7,5 @@ import android.content.Context;
  */
 
 public interface InteractionListener {
-    Context getContext();
+    Context getActivity();
 }
