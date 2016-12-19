@@ -49,6 +49,7 @@ public class dbOpt {
 
         try{
             db.execSQL("INSERT INTO appinfo(appName," +
+                    "uid,"+
                     "packageName," +
                     "appIcon," +
                     "InstallTime," +
@@ -57,6 +58,7 @@ public class dbOpt {
                     "secinfo," +
                     "SD_Place)" +
                     " values(?,?,?,?,?,?,?,?)", new Object[]{appInfo.appName,
+                    appInfo.uid,
                     appInfo.packageName,
                     appInfo.appIcon,
                     appInfo.installTime,

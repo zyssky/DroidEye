@@ -1,10 +1,13 @@
 package com.example.administrator.droideye.TrafficMonitor;
 
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.TrafficStats;
 import android.util.Log;
 
+import com.example.administrator.droideye.Models.Configuration;
+import com.example.administrator.droideye.Models.DataBase.dbOpt;
 import com.example.administrator.droideye.Utils.FileUtils;
 
 import java.util.ArrayList;
@@ -27,20 +30,24 @@ public class AppTrafficMonitor {
 
         this.listener = listener;
         this.packageManager = listener.getAppContext().getPackageManager();
+        //Here Test for TrafficStatus Class:
+        CheckTraffic cktraffic = new CheckTraffic(listener);
+        cktraffic.start();
     }
 
     public List<HashMap<String,Object>> showApps(){
 
+        //Haven't load into database yet.
         List<HashMap<String,Object>> res = new ArrayList<HashMap<String, Object>>();
         List<PackageInfo> usingNetPackages = requireNetPackages(packageManager);
-        for (PackageInfo app : usingNetPackages){
-            if(app.applicationInfo.loadLabel(packageManager).length()>25)
+        for (PackageInfo appinfo : usingNetPackages){
+            if(appinfo.applicationInfo.loadLabel(packageManager).length()>25)
                 continue;
-//            Log.d("[*]UsingInternet", app.applicationInfo.loadLabel(packageManager)+"");
+
             HashMap<String,Object> item = new HashMap<String,Object>();
-            item.put("AppIcon",app.applicationInfo.loadIcon(packageManager));
-            item.put("AppName",app.applicationInfo.loadLabel(packageManager));
-            item.put("traffic","0KB");
+            item.put("AppIcon",appinfo.applicationInfo.loadIcon(packageManager));
+            item.put("AppName",appinfo.applicationInfo.loadLabel(packageManager));
+            item.put("traffic",staticTraffic(appinfo));
             res.add(item);
         }
         return res;
@@ -99,31 +106,46 @@ public class AppTrafficMonitor {
         return info.applicationInfo.uid;
     }
 
-    public String getAppNameFromInfo(PackageInfo info){
-
-        return info.applicationInfo.loadLabel(packageManager)+"";
-    }
-
     public String formatprintTraffic(long traffic){
 
         return FileUtils.formatFileSize(listener.getAppContext(),traffic);
     }
 
-    public void staticTraffic(List<Map> statics, List<PackageInfo> usingNetPackages){
+    public String staticTraffic(PackageInfo appinfo){
 
-        //List[Map(AppName,Traffic)]
-        Map<String, Long> temp = new HashMap<String, Long>();
-        for(int i = 0; i < usingNetPackages.size(); i++){
-
-            PackageInfo appInfo = usingNetPackages.get(i);
-            int uid = getUidFromInfo(appInfo);
-            String name = getAppNameFromInfo(appInfo);
-
-        }
+        //New type of static analyzing states here.
+        int uid = getUidFromInfo(appinfo);
+        long trafficin = getTrafficIn(uid);
+        long trafficout= getTrafficOut(uid);
+        long trafficall= trafficin + trafficout;
+        //Request for all
+        return formatprintTraffic(trafficall);
     }
 
 //    public void test(){
 //        FileUtils util = new FileUtils();
 //        Log.d("[TestFileFormat]", util.formatFileSize(listener.getAppContext(),1500));
 //    }
+}
+//
+class CheckTraffic extends Thread{
+
+    TrafficInsListener listener;
+    public CheckTraffic(TrafficInsListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void run(){
+
+        while(true){
+            try{
+                Thread.sleep(2000);
+                long temp = TrafficStats.getTotalRxBytes()+TrafficStats.getTotalTxBytes();
+                Log.d("Traffic Status:" , FileUtils.formatFileSize(listener.getAppContext(),temp));
+            }catch(Exception e){
+                Log.d(Configuration.file_opt_error,e.toString());
+            }
+        }
+    }
 }

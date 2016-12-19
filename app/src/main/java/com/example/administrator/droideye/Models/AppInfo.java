@@ -10,6 +10,7 @@ public class AppInfo{
 
     //Characters
     public String appName     = null;
+    public String uid         = null;
     public String packageName = null;
     public String appIcon     = null;
     public String installTime = null;
@@ -20,14 +21,16 @@ public class AppInfo{
 
     //Constructors
 
-    public AppInfo(String appName, String packageName ,String appIcon){
+    public AppInfo(String appName, String uid, String packageName ,String appIcon){
 
         this.appName        = appName;
+        this.uid            = uid;
         this.packageName    = packageName;
         this.appIcon        = appIcon;
     }
 
     public AppInfo(String appName,
+                   String uid,
                    String packageName,
                    String appIcon,
                    String installTime,
@@ -37,6 +40,7 @@ public class AppInfo{
                    String SD_Place)
     {
         this.appName            = appName;
+        this.uid                = uid;
         this.packageName        = packageName;
         this.appIcon            = appIcon;
         this.installTime        = installTime;

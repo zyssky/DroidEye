@@ -37,6 +37,7 @@ public class Configuration {
 
     public static final String create_appinfo = create_header + "appinfo(" +
             "appName TEXT PRIMARY KEY , "     +
+            "uid         TEXT ,         "     +
             "packageName TEXT ,         "     +
             "appIcon     TEXT ,         "     +
             "InstallTime TEXT ,         "     +
