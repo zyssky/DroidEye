@@ -15,6 +15,16 @@
         android:layout_height="match_parent"
         android:id="@+id/main_fragment"></FrameLayout>
 
+    <ListView
+        android:id="@+id/runningapplist"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:divider="@null"
+        android:scrollbars="none"
+        android:layoutAnimation="@anim/anim_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

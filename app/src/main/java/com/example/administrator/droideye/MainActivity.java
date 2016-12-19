@@ -1,5 +1,6 @@
 package com.example.administrator.droideye;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements InteractionListen
     }
 
     @Override
-    public Context getContext() {
-        return getApplicationContext();
+    public Activity getActivity() {
+        return this;
     }
 }
