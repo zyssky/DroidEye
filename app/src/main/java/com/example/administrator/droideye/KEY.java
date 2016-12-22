@@ -8,5 +8,6 @@ public class KEY {
     public final static String DURATION = "DURATION";
     public final static String WHITELIST = "WHITELIST";
     public final static String PROCESS = "PROCESS";
-
+    public final static String ADDDEFAULTWHITELIST = "FIRST";
+    public final static String INITWHITELISTFLAG = "FLAG";
 }

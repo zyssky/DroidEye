@@ -8,4 +8,6 @@ import android.content.Context;
 
 public interface InteractionListener {
     Context getActivity();
+
+    void close();
 }

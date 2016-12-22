@@ -2,6 +2,7 @@ package com.example.administrator.droideye;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class Setting {
     private static Setting setting;
     private static boolean isInited = false;
 
-    private static long defduration = 1800000;
+    private static int defduration = 1800;
 
     public final static String TAG = Setting.class.getSimpleName();
 
@@ -34,12 +35,25 @@ public class Setting {
     public static void init(Context context){
         setting = new Setting(context);
         isInited = true;
+        setting.firstStart(context);
     }
 
-    public Setting getInstance(){
+    public static Setting getInstance(){
         if(!isInited)
             Log.d(TAG, "getInstance: without initing !!");
         return setting;
+    }
+
+    private void firstStart(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(KEY.ADDDEFAULTWHITELIST,Context.MODE_PRIVATE);
+        if(!preferences.getBoolean(KEY.INITWHITELISTFLAG,false)){
+            List<ApplicationInfo> list = ProcessHandler.getInstance().getInstalledApps();
+            for (ApplicationInfo app :
+                    list) {
+                if (ProcessHandler.getInstance().isInSystem(app))
+                    setting.addToWhiteList(app.processName);
+            }
+        }
     }
 
     public void setDurationOfBackgroundProcess(long lastmillisecond){
@@ -47,16 +61,16 @@ public class Setting {
         processPreferencesEditor.commit();
     }
 
-    public long getDDurationOfBackgroundProcess(){
-        return processPreferences.getLong(KEY.DURATION,defduration);
+    public int getDDurationOfBackgroundProcess(){
+        return processPreferences.getInt(KEY.DURATION,defduration);
     }
 
-    public void extendWhiteList(List<String> whitelist){
-        for (String item :
-                whitelist) {
-            whitelistProferenceEditor.putString(item,item);
-        }
+    public void addToWhiteList(String item){
+        whitelistProferenceEditor.putString(item,item);
+        whitelistProferenceEditor.commit();
     }
+
+
 
 
     public void deleteFromWhiteList(List<String> whitelist){

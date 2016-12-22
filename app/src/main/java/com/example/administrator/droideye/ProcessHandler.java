@@ -3,15 +3,11 @@ package com.example.administrator.droideye;
 import android.app.ActivityManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -25,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,9 +37,10 @@ import static android.content.Context.USAGE_STATS_SERVICE;
 public class ProcessHandler {
     private List<ActivityManager.RunningAppProcessInfo> listAppInfo;
     private PackageManager packageManager;
-    private InteractionListener listener;
+    private Context context;
     private  ActivityManager activityManager;
     private UsageStatsManager usageStatsManager;
+
 
     public static String TAG = ProcessHandler.class.getSimpleName();
 
@@ -57,8 +56,8 @@ public class ProcessHandler {
         }
     }
 
-    public static void init(InteractionListener listener){
-        processHandler = new ProcessHandler(listener);
+    public static void init(Context context){
+        processHandler = new ProcessHandler(context);
         isInited = true;
     }
 
@@ -72,7 +71,7 @@ public class ProcessHandler {
             sb.append(hour);
             sb.append(":");
         }
-        if(minute>0){
+        if(minute>=0){
             if(minute>9)
                 sb.append(minute);
             else {
@@ -90,18 +89,29 @@ public class ProcessHandler {
         return sb.toString();
     }
 
-    public ProcessHandler(InteractionListener listener){
-        this.listener = listener;
-        this.activityManager = (ActivityManager) listener.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
-        this.packageManager = listener.getActivity().getPackageManager();
-        this.usageStatsManager=(UsageStatsManager) listener.getActivity().getSystemService(USAGE_STATS_SERVICE);
+    public static String intToSizeStr(int size){
+        if(size<1024)
+            return ""+size+"KB";
+        double mb = size/1024.0;
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        return decimalFormat.format(mb)+"MB";
+    }
 
+    public static int MsToSecond(long ms){
+        return new BigDecimal(ms/1000).intValueExact();
+    }
+
+    public ProcessHandler(Context context){
+        this.context = context;
+        this.activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        this.packageManager = context.getPackageManager();
+        this.usageStatsManager=(UsageStatsManager) context.getSystemService(USAGE_STATS_SERVICE);
     }
 
     public List<AndroidAppProcess> getRunningApps(){
 
         List<AndroidAppProcess> processInfoList = ProcessManager.getRunningAppProcesses();
-        Toast.makeText(listener.getActivity(),"start your test ! with process: "+processInfoList.size(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"start your test ! with process: "+processInfoList.size(),Toast.LENGTH_SHORT).show();
 
         for (AndroidAppProcess appProcess : processInfoList) {
             int pid = appProcess.uid; // pid
@@ -111,10 +121,8 @@ public class ProcessHandler {
         return processInfoList;
     }
 
-    public void killProcess(String packagename){
-        Log.d(TAG, "killProcess: "+packagename);
-        ActivityManager activityManager = (ActivityManager) listener.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
-        activityManager.killBackgroundProcesses(packagename);
+    public List<ApplicationInfo> getInstalledApps(){
+        return packageManager.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
     }
 
     public void forceStopProcess(String packagename){
@@ -131,16 +139,12 @@ public class ProcessHandler {
         }
     }
 
+    public void test(){
+        forceStopProcess("com.example.administrator.droideye");
+    }
+
     public List<ActivityManager.RunningServiceInfo> getRunningServices(){
         List<ActivityManager.RunningServiceInfo> serviceInfoList = activityManager.getRunningServices(1000);
-
-        for (ActivityManager.RunningServiceInfo appProcess : serviceInfoList) {
-            int pid = appProcess.pid; // pid
-            String processName = appProcess.process; // 服务名
-            Log.d(TAG, "ServiceName: " + processName + "  used time: "+getServiceUsedTime(appProcess));
-        }
-
-//        Toast.makeText(listener.getActivity(),"start your test ! with service:"+serviceInfoList.size(),Toast.LENGTH_SHORT).show();
         return serviceInfoList;
     }
 
@@ -148,34 +152,46 @@ public class ProcessHandler {
         return SystemClock.elapsedRealtime()-service.activeSince;
     }
 
-    public List<HashMap<String,Object>> testgetList(){
-        List<PackageInfo> list = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
-        List<HashMap<String,Object>> result = new ArrayList<HashMap<String,Object>>();
-        for (PackageInfo app :
-                list) {
-            HashMap<String,Object> item = new HashMap<String,Object>();
-            item.put("icon",app.applicationInfo.loadIcon(packageManager));
-            item.put("name",app.applicationInfo.loadLabel(packageManager));
-            item.put("time","0KB");
-            result.add(item);
-        }
-        return result;
-    }
-
     public List<HashMap<String,Object>> getRunningApplications(boolean includeSystem){
         List<HashMap<String,Object>> result = new ArrayList<HashMap<String,Object>>();
+        List<ActivityManager.RunningServiceInfo> list = getRunningServices();
+        HashMap<String,SimpleProcess> list1 = getRunningSimpleProcess();
+        HashMap<String,Object> counted = new HashMap<String, Object>();
         if(includeSystem){
-            for (ActivityManager.RunningServiceInfo service :
-                    getRunningServices()) {
-
-                ApplicationInfo app = getSpecifyAppInfo(service.process);
-                if(null!=app){
+            for (ActivityManager.RunningServiceInfo service  :
+                    list) {
+                ApplicationInfo app = getSpecifyAppInfo(service.process.split(":")[0]);
+                if(null!=app&&!counted.containsKey(app.processName)){
                     HashMap<String, Object> map = new HashMap<String, Object>();
                     map.put("icon",app.loadIcon(packageManager));
                     map.put("name",app.loadLabel(packageManager));
+                    map.put("packagename",app.processName);
+                    if(list1.containsKey(app.processName))
+                        map.put("size",list1.get(app.processName).size);
+//                    list1.remove(service.process);
                     String time = ProcessHandler.longToTimeStr(getServiceUsedTime(service));
                     map.put("time",time);
+                    counted.put(app.processName,0);
                     result.add(map);
+                }
+            }
+            for (Map.Entry<String,SimpleProcess> process :
+                    list1.entrySet()) {
+                if (!counted.containsKey(process.getValue().processname)){
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    try {
+                        map.put("icon",packageManager.getApplicationIcon(process.getValue().processname));
+                        map.put("name",packageManager.getApplicationLabel(getSpecifyAppInfo(process.getValue().processname)));
+//                        String time = ProcessHandler.longToTimeStr(getAppInForegroundTime(process.getValue().processname));
+                        map.put("time","");
+                        map.put("size",process.getValue().size);
+                        map.put("packagename",process.getValue().processname);
+                        counted.put(process.getValue().processname,0);
+//                        list1.remove(process.getValue().processname);
+                        result.add(map);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -183,20 +199,36 @@ public class ProcessHandler {
             for (ActivityManager.RunningServiceInfo service :
                     getRunningServices()) {
 
-                ApplicationInfo app = getSpecifyAppInfo(service.process);
-                if(!isInSystem(service)){
-
+                ApplicationInfo app = getSpecifyAppInfo(service.process.split(":")[0]);
+                if(null!=app&&!isInSystem(app)&&!counted.containsKey(app.processName)){
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    map.put("icon",app.loadIcon(packageManager));
+                    map.put("name",app.loadLabel(packageManager));
+                    map.put("packagename",app.processName);
+                    String time = ProcessHandler.longToTimeStr(getServiceUsedTime(service));
+                    map.put("time",time);
+                    if(list1.containsKey(app.processName))
+                        map.put("size",list1.get(app.processName).size);
+                    counted.put(app.processName,0);
+                    result.add(map);
+                }
+            }
+            for (Map.Entry<String,SimpleProcess> process :
+                    list1.entrySet()) {
+                if (!process.getValue().isInSystem&&!counted.containsKey(process.getValue().processname)){
                     HashMap<String, Object> map = new HashMap<String, Object>();
                     try {
-                        map.put("icon",packageManager.getApplicationIcon(service.process));
-                        map.put("name",app.loadLabel(packageManager));
-                        String time = ProcessHandler.longToTimeStr(getServiceUsedTime(service));
-                        map.put("time",time);
+                        map.put("icon",packageManager.getApplicationIcon(process.getValue().processname));
+                        map.put("name",packageManager.getApplicationLabel(getSpecifyAppInfo(process.getValue().processname)));
+//                        String time = ProcessHandler.longToTimeStr(getAppInForegroundTime(process.getValue().processname));
+                        map.put("time","");
+                        map.put("size",process.getValue().size);
+                        map.put("packagename",process.getValue().processname);
+                        counted.put(process.getValue().processname,0);
                         result.add(map);
-                    } catch (PackageManager.NameNotFoundException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
             }
         }
@@ -204,42 +236,61 @@ public class ProcessHandler {
         return result;
     }
 
+    public HashMap<String,UsedRecord> getAppUsedRecords(){
+        HashMap<String,UsedRecord> result = new HashMap<String,UsedRecord>();
+        List<ActivityManager.RunningServiceInfo> serviceInfoList = getRunningServices();
+        HashMap<String,SimpleProcess> processHashMap = getRunningSimpleProcess();
+        for (ActivityManager.RunningServiceInfo service :
+                serviceInfoList) {
+            String process = service.process.split(":")[0];
+            if (!Setting.getInstance().isInWhiteList(process)) {
+                ApplicationInfo app = getSpecifyAppInfo(process);
+                if (null != app)
+                    result.put(process, new UsedRecord((String) packageManager.getApplicationLabel(app)
+                            , MsToSecond(getServiceUsedTime(service))));
+            }
+            if(processHashMap.containsKey(process))
+                processHashMap.remove(process);
+        }
+        for (Map.Entry<String,SimpleProcess> entry :
+                processHashMap.entrySet()) {
+            if (!Setting.getInstance().isInWhiteList(entry.getKey()))
+                result.put(entry.getKey(),new UsedRecord((String)packageManager.getApplicationLabel(getSpecifyAppInfo(entry.getValue().processname))
+                        ,MsToSecond(getAppBackgroundTime(entry.getKey()))));
+        }
+        return result;
+    }
 
-    public void exec(String cmd){
+    public HashMap<String,SimpleProcess> getRunningSimpleProcess(){
+        String cmd = "ps";
         String result = "";
-        String con = "";
+        HashMap<String,SimpleProcess> list = new HashMap<String,SimpleProcess>();
         try {
+
             Process p =  Runtime.getRuntime().exec(cmd);
             BufferedReader br=new BufferedReader(new InputStreamReader(p.getInputStream()));
             while((result=br.readLine())!=null)
             {
-                Log.d(TAG, "exec: "+result);
-                con+=result;
+                String[] temp = result.split(" +");
+                if(temp[temp.length-1].contains(".")) {
+                    SimpleProcess pp = new SimpleProcess(temp);
+                    if (pp.user.startsWith("u0") || pp.user.equals("system"))
+                        list.put(pp.processname, pp);
+                }
             }
         }
         catch (IOException e){
             e.printStackTrace();
         }
-//        Log.d(TAG, "exec: "+con);
-    }
-
-    public List<ApplicationInfo> getInstalledAppInfoList(){
-
-        List<ApplicationInfo> list = packageManager.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
-//        Toast.makeText(listener.getActivity(),"start your test ! with installed app :"+list.size(),Toast.LENGTH_SHORT).show();
-//        for (ApplicationInfo app:
-//             list) {
-//            if(!isInSystem(app))
-//                Log.d(TAG, "getInstalledAppInfoList: "+app.processName);
-//        }
         return list;
     }
+
 
     public ApplicationInfo getSpecifyAppInfo(String packageName) {
         try {
             return packageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA);
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.d(TAG, "getSpecifyAppInfo: packageName not found "+packageName);
         }
         return null;
     }
@@ -253,44 +304,12 @@ public class ProcessHandler {
     }
 
     public boolean isInSystem(ActivityManager.RunningServiceInfo service){
-        ApplicationInfo app = getSpecifyAppInfo(service.process);
+        ApplicationInfo app = getSpecifyAppInfo(service.process.split(":")[0]);
         if(null==app)
             return true;
         return isInSystem(app);
     }
 
-    public Long getAppUsedTime(ApplicationInfo app){
-        ComponentName appName = new ComponentName(app.packageName,app.getClass().getName());
-        Long usedTime;
-        try {
-            //获得ServiceManager类
-            Class<?> ServiceManager = Class.forName("android.os.ServiceManager");
-            //获得ServiceManager的getService方法
-            Method getService = ServiceManager.getMethod("getService", java.lang.String.class);
-            //调用getService获取RemoteService
-            Object oRemoteService = getService.invoke(null, USAGE_STATS_SERVICE);
-            //获得IUsageStats.Stub类
-            Class<?> cStub = Class.forName("com.android.internal.app.IUsageStats$Stub");
-            //获得asInterface方法
-            Method asInterface = cStub.getMethod("asInterface", android.os.IBinder.class);
-            //调用asInterface方法获取IUsageStats对象
-            Object oIUsageStats = asInterface.invoke(null, oRemoteService);
-            //获得getPkgUsageStats(ComponentName)方法
-            Method getPkgUsageStats = oIUsageStats.getClass().getMethod("getPkgUsageStats", ComponentName.class);
-            //调用getPkgUsageStats 获取PkgUsageStats对象
-            Object aStats = getPkgUsageStats.invoke(oIUsageStats, appName);
-
-            //获得PkgUsageStats类
-            Class<?> PkgUsageStats = Class.forName("com.android.internal.os.PkgUsageStats");
-
-            usedTime = PkgUsageStats.getDeclaredField("usageTime").getLong(aStats);
-            return usedTime;
-//            PkgUsageStats.getDeclaredField("launchCount").getInt(aStats);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public Long getAppInForegroundTime(String packageName){
         getUsageStatsPermission();
@@ -318,43 +337,17 @@ public class ProcessHandler {
         return usedtime;
     }
 
-    public void test(){
-        List<AndroidAppProcess> list = getRunningApps();
-        List<ActivityManager.RunningServiceInfo> listService = getRunningServices();
-//        for (AndroidAppProcess app : list) {
-//            Toast.makeText(listener.getActivity(),app.getPackageName(),Toast.LENGTH_SHORT).show();
-//            boolean temp = isInSystem(getSpecifyAppInfo(app.getPackageName()));
-//            if (!temp) {
-////                killProcess(app.getPackageName());
-//
-//                if(app.getPackageName().contains("schedule"))
-//                    forceStopProcess(app.getPackageName());
-//            }
-//        }
-        for (ActivityManager.RunningServiceInfo service :
-                listService) {
-//            Toast.makeText(listener.getActivity(),service.process,Toast.LENGTH_SHORT).show();
-            if (!isInSystem(service)) {
-                Log.d(TAG, "service: " + service.process);
-//                Toast.makeText(listener.getActivity(),service.process,Toast.LENGTH_SHORT).show();
-                if (service.process.contains("mobile")) {
-//                    forceStopProcess(service.process);
-                    killProcess(service.process);
-                }
-            }
-        }
-    }
 
     public void getUsageStatsPermission(){
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP){
             if(hasUsageStatsOption())
                 if(!hasOpenUsageStats())
-                    listener.getActivity().startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+                    context.startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
         }
     }
 
     private boolean hasUsageStatsOption() {
-        PackageManager packageManager = listener.getActivity().getApplicationContext()
+        PackageManager packageManager = context.getApplicationContext()
                 .getPackageManager();
         Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
@@ -364,7 +357,7 @@ public class ProcessHandler {
 
     private boolean hasOpenUsageStats(){
         long ts = System.currentTimeMillis();
-        UsageStatsManager usageStatsManager = (UsageStatsManager) listener.getActivity()
+        UsageStatsManager usageStatsManager = (UsageStatsManager) context
                 .getApplicationContext().getSystemService(USAGE_STATS_SERVICE);
         List<UsageStats> queryUsageStats = usageStatsManager.queryUsageStats(
                 UsageStatsManager.INTERVAL_BEST, 0, ts);
@@ -372,6 +365,43 @@ public class ProcessHandler {
             return false;
         }
         return true;
+    }
+
+    public class UsedRecord implements Comparable<UsedRecord>{
+        public String lable;
+        public int seconds;
+        public UsedRecord(String lable,int seconds){
+            this.lable  = lable;
+            this.seconds = seconds;
+        }
+
+        @Override
+        public int compareTo(UsedRecord another) {
+            if(this.seconds>another.seconds)
+                return 1;
+            if(this.seconds == another.seconds)
+                return 0;
+            return -1;
+        }
+    }
+
+    class SimpleProcess{
+        public String user;
+        public String processname;
+        public int pid;
+        public String size;
+        boolean isInSystem;
+        public SimpleProcess(String[] result){
+            try{
+                user = result[0];
+                processname = result[result.length-1].split(":")[0];
+                pid = Integer.parseInt(result[1]);
+                isInSystem = isInSystem(getSpecifyAppInfo(processname));
+                size = intToSizeStr(Integer.parseInt(result[4]));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }
 
