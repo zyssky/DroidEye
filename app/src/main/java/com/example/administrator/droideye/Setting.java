@@ -21,7 +21,7 @@ public class Setting {
     private static Setting setting;
     private static boolean isInited = false;
 
-    private static int defduration = 1800;
+    private static int defduration = 1800000;
 
     public final static String TAG = Setting.class.getSimpleName();
 
@@ -53,6 +53,8 @@ public class Setting {
                 if (ProcessHandler.getInstance().isInSystem(app))
                     setting.addToWhiteList(app.processName);
             }
+            preferences.edit().putBoolean(KEY.INITWHITELISTFLAG,true).commit();
+
         }
     }
 
@@ -73,11 +75,9 @@ public class Setting {
 
 
 
-    public void deleteFromWhiteList(List<String> whitelist){
-        for (String item :
-                whitelist) {
-            whitelistProferenceEditor.remove(item);
-        }
+    public void deleteFromWhiteList(String item){
+        whitelistProferenceEditor.remove(item);
+        whitelistProferenceEditor.commit();
     }
 
     public boolean isInWhiteList(String item){

@@ -1,11 +1,15 @@
 package com.example.administrator.droideye.Service;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.util.Log;
 
+import com.example.administrator.droideye.KEY;
 import com.example.administrator.droideye.ProcessHandler;
 import com.example.administrator.droideye.Setting;
 
@@ -18,7 +22,7 @@ import java.util.Map;
 import static com.example.administrator.droideye.ProcessHandler.TAG;
 
 public class MonitorService extends Service {
-    int sleeptime;
+    long sleeptime;
     public MonitorService() {
     }
 
@@ -36,7 +40,17 @@ public class MonitorService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mission1();
+        sendBroadcast();
+        Log.d(TAG, "onStartCommand: "+sleeptime);
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void sendBroadcast(){
+        Intent intent = new Intent(this,StartUpReceiver.class);
+//        intent.putExtra(KEY.SLEEPTIME,10000);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+sleeptime,pendingIntent);
     }
 
 
@@ -45,14 +59,14 @@ public class MonitorService extends Service {
         ProcessHandler.init(this);
         Setting.init(this);
         List<String> tobekill = new ArrayList<String>();
-        int deadline = Setting.getInstance().getDDurationOfBackgroundProcess();
+//        int deadline = Setting.getInstance().getDDurationOfBackgroundProcess();
         sleeptime = Setting.getInstance().getDDurationOfBackgroundProcess();
         HashMap<String,ProcessHandler.UsedRecord> recordHashMap = ProcessHandler.getInstance().getAppUsedRecords();
         for (Map.Entry<String, ProcessHandler.UsedRecord> entry : recordHashMap.entrySet()){
-            if(entry.getValue().seconds>deadline)
+            if(entry.getValue().seconds>sleeptime)
                 tobekill.add(entry.getKey());
             else{
-                int tolivetime = sleeptime-entry.getValue().seconds;
+                long tolivetime = sleeptime-entry.getValue().seconds;
                 sleeptime = sleeptime>tolivetime?tolivetime:sleeptime;
             }
         }

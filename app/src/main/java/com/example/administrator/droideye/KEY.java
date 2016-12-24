@@ -10,4 +10,5 @@ public class KEY {
     public final static String PROCESS = "PROCESS";
     public final static String ADDDEFAULTWHITELIST = "FIRST";
     public final static String INITWHITELISTFLAG = "FLAG";
+    public final static String SLEEPTIME = "SLEEP";
 }

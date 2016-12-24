@@ -42,16 +42,20 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
         ProcessHandler.init(listener.getActivity());
         Setting.init(listener.getActivity());
         includeSystem = false;
-//        runninglist = ProcessHandler.getInstance().getRunningApplications(false);
         initValuesOnView();
     }
 
     void initValuesOnView(){
         view.setTestBtnListener(this);
+        view.setListViewAdapter(generateMyAdapter());
+//        view.setListViewAdapter(generateAdapter(includeSystem));
+//        view.setListViewListener(this);
+    }
 
-//        setFragment(ListFragment.newInstance(generateAdapter(false),this,null));
-        view.setListViewAdapter(generateAdapter(includeSystem));
-        view.setListViewListener(this);
+    private MyAdapter generateMyAdapter(){
+        MyAdapter adapter = new MyAdapter(listener.getActivity(),R.layout.setting_permission,ProcessHandler.getInstance().getInstalledAppWithKillingPermission()
+                ,new String[]{"icon","name","switch1","processname"},new int[]{R.id.icon,R.id.name,R.id.switch1});
+        return adapter;
     }
 
     private SimpleAdapter generateAdapter(boolean includeSystem){

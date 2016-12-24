@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -119,6 +120,28 @@ public class ProcessHandler {
             Log.d(TAG, "processName: " + packageName + "  uid : " + pid);
         }
         return processInfoList;
+    }
+
+    public List<Map<String,Object>> getInstalledAppWithKillingPermission(){
+        List<ApplicationInfo> apps = getInstalledApps();
+        List<Map<String,Object>> result = new ArrayList<Map<String, Object>>();
+        for (ApplicationInfo app :
+                apps) {
+            if (Setting.getInstance().isInWhiteList(app.processName))
+                result.add(generateMapItem(app.loadIcon(packageManager),(String)app.loadLabel(packageManager),false,app.processName));
+            else
+                result.add(generateMapItem(app.loadIcon(packageManager),(String)app.loadLabel(packageManager),true,app.processName));
+        }
+        return result;
+    }
+
+    private Map<String,Object> generateMapItem(Drawable drawable,String name,boolean switch1,String processname){
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("icon",drawable);
+        map.put("name",name);
+        map.put("switch1",switch1);
+        map.put("processname",processname);
+        return map;
     }
 
     public List<ApplicationInfo> getInstalledApps(){
@@ -247,16 +270,20 @@ public class ProcessHandler {
                 ApplicationInfo app = getSpecifyAppInfo(process);
                 if (null != app)
                     result.put(process, new UsedRecord((String) packageManager.getApplicationLabel(app)
-                            , MsToSecond(getServiceUsedTime(service))));
+                            , getServiceUsedTime(service)));
             }
             if(processHashMap.containsKey(process))
                 processHashMap.remove(process);
         }
         for (Map.Entry<String,SimpleProcess> entry :
                 processHashMap.entrySet()) {
-            if (!Setting.getInstance().isInWhiteList(entry.getKey()))
-                result.put(entry.getKey(),new UsedRecord((String)packageManager.getApplicationLabel(getSpecifyAppInfo(entry.getValue().processname))
-                        ,MsToSecond(getAppBackgroundTime(entry.getKey()))));
+            if (!Setting.getInstance().isInWhiteList(entry.getKey())){
+                ApplicationInfo app = getSpecifyAppInfo(entry.getValue().processname);
+                if(null!=app)
+                    result.put(entry.getKey(),new UsedRecord((String)packageManager.getApplicationLabel(app)
+                            ,getAppBackgroundTime(entry.getKey())));
+            }
+
         }
         return result;
     }
@@ -342,7 +369,7 @@ public class ProcessHandler {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP){
             if(hasUsageStatsOption())
                 if(!hasOpenUsageStats())
-                    context.startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+                    context.startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
 
@@ -369,8 +396,8 @@ public class ProcessHandler {
 
     public class UsedRecord implements Comparable<UsedRecord>{
         public String lable;
-        public int seconds;
-        public UsedRecord(String lable,int seconds){
+        public long seconds;
+        public UsedRecord(String lable,long seconds){
             this.lable  = lable;
             this.seconds = seconds;
         }

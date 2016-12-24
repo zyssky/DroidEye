@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -62,7 +63,7 @@ public class MainView extends RelativeLayout {
                 }).show();
     }
 
-    public void setListViewAdapter(SimpleAdapter adapter){
+    public void setListViewAdapter(BaseAdapter adapter){
         listView.setAdapter(adapter);
     }
 }
