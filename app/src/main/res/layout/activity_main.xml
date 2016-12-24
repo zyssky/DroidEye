@@ -10,15 +10,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.administrator.droideye.MainActivity">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_fragment"></FrameLayout>
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/main_fragment"></FrameLayout>-->
 
     <ListView
         android:id="@+id/runningapplist"
-        android:layout_marginLeft="8dip"
-        android:layout_marginRight="8dip"
         android:divider="@null"
         android:scrollbars="none"
         android:layoutAnimation="@anim/anim_listview"

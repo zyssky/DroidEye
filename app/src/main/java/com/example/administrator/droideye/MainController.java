@@ -2,42 +2,80 @@ package com.example.administrator.droideye;
 
 import android.app.ActivityManager;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.example.administrator.droideye.Service.LongRunningService;
+import com.example.administrator.droideye.Service.MonitorService;
 import com.example.administrator.droideye.Views.ListFragment;
 import com.example.administrator.droideye.Models.Configuration;
 import com.example.administrator.droideye.TrafficMonitor.TrafficInsActivity;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import static com.example.administrator.droideye.Setting.TAG;
 
 /**
  * Created by Administrator on 2016/12/3.
  */
 
-public class MainController implements View.OnClickListener {
+public class MainController implements View.OnClickListener,AdapterView.OnItemClickListener {
     private MainView view;
     private InteractionListener listener;
     private SimpleAdapter simpleAdapter;
+    private boolean includeSystem;
+
+//    private List<HashMap<String,Object>> runninglist;
 
     public MainController(MainView view, InteractionListener listener){
         this.view = view;
         this.listener = listener;
-        ProcessHandler.init(listener);
+        ProcessHandler.init(listener.getActivity());
         Setting.init(listener.getActivity());
+        includeSystem = false;
         initValuesOnView();
     }
 
     void initValuesOnView(){
         view.setTestBtnListener(this);
-        simpleAdapter = new SimpleAdapter(listener.getActivity(),ProcessHandler.getInstance().testgetList(),R.layout.trafficlst_item
-                ,new String[]{"icon","name","time"},new int[]{R.id.AppIcon,R.id.AppName,R.id.traffic});
-//        setFragment(ListFragment.newInstance(simpleAdapter,null,null));
-        view.setListViewAdapter(simpleAdapter);
+        view.setListViewAdapter(generateMyAdapter());
+//        view.setListViewAdapter(generateAdapter(includeSystem));
+//        view.setListViewListener(this);
+    }
+
+    private MyAdapter generateMyAdapter(){
+        MyAdapter adapter = new MyAdapter(listener.getActivity(),R.layout.setting_permission,ProcessHandler.getInstance().getInstalledAppWithKillingPermission()
+                ,new String[]{"icon","name","switch1","processname"},new int[]{R.id.icon,R.id.name,R.id.switch1});
+        return adapter;
+    }
+
+    private SimpleAdapter generateAdapter(boolean includeSystem){
+        SimpleAdapter simpleAdapter;
+        simpleAdapter = new SimpleAdapter(listener.getActivity(),ProcessHandler.getInstance().getRunningApplications(includeSystem),R.layout.process_item
+                ,new String[]{"icon","name","time","size"},new int[]{R.id.Icon,R.id.Name,R.id.Time,R.id.Size});
+
+        simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Object data, String arg2) {
+                if (view instanceof ImageView && data instanceof Drawable){
+                    ImageView iv = (ImageView)view;
+                    iv.setImageDrawable((Drawable)data);
+                    return true;
+                }
+                return false;
+            }
+        });
+        this.simpleAdapter = simpleAdapter;
+        return simpleAdapter;
     }
 
     private void setFragment(Fragment fragment){
@@ -48,14 +86,13 @@ public class MainController implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
-//        Toast.makeText(listener.getActivity(),"start your test ! ",Toast.LENGTH_SHORT).show();
-//        ActivityManager activityManager = listener.getActivity().getSystemService();
-//        ProcessHandler.getInstance().test();
-        listener.getActivity().startService(new Intent(listener.getActivity(), LongRunningService.class));
+//        listener.close();
+//        listener.getActivity().startService(new Intent(listener.getActivity(), MonitorService.class));
         switch (v.getId()){
             case R.id.test:
-                new ProcessHandler(listener).getInstalledAppInfoList();
+                view.setListViewAdapter(generateAdapter(!includeSystem));
+                includeSystem = !includeSystem;
+                ProcessHandler.getInstance().getAppUsedRecords();
                 break;
             case R.id.showtraffic:
                 Intent intent = new Intent(listener.getActivity(), TrafficInsActivity.class);
@@ -64,8 +101,26 @@ public class MainController implements View.OnClickListener {
             default:
                 Log.d(Configuration.click_listener_error,"Switch-Default Error.");
         }
-//        Toast.makeText(listener.getContext(),"start your test ! ",Toast.LENGTH_SHORT).show();
-//        ActivityManager activityManager = listener.getContext().getSystemService();
+
+    }
+
+    public int stopApp(String t){
+        ProcessHandler.getInstance().forceStopProcess(t);
+        view.setListViewAdapter(generateAdapter(includeSystem));
+        return 0;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        final HashMap<String,Object> map = (HashMap<String, Object>) simpleAdapter.getItem(position);
+
+        Log.d(TAG, "onItemClick: "+map.get("packagename"));
+        this.view.showDialog("是否关闭该应用", (String) map.get("name"), new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return stopApp((String) map.get("packagename"));
+            }
+        });
 
     }
 }
