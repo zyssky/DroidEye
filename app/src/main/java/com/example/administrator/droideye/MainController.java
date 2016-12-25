@@ -44,6 +44,12 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
         ProcessHandler.init(listener.getActivity());
         Setting.init(listener.getActivity());
         includeSystem = false;
+
+        if(RootHelper.isDeviceRooted()) {
+            String apkRoot = "chmod 777 " + listener.getActivity().getPackageCodePath();
+            RootHelper.RootCommand(apkRoot);
+        }
+
         initValuesOnView();
     }
 
