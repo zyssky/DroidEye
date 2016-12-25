@@ -1,8 +1,12 @@
 package com.example.administrator.droideye.TrafficMonitor;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.media.Image;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,7 +29,6 @@ public class TrafficInsView extends RelativeLayout{
     private ImageButton tensbtn;
     private ImageButton fivesbtn;
     private ImageButton onesbtn;
-
     private ListView trafficList;
 
     public TrafficInsView(Context context, AttributeSet attrs) {
@@ -61,4 +64,28 @@ public class TrafficInsView extends RelativeLayout{
         trafficList.setOnItemClickListener(listener);
     }
 
+    public void setBtnTransparent(int btn_id){
+
+        ImageButton btn = (ImageButton) findViewById(btn_id);
+        btn.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+
+    public void setVisible(int btn_id){
+
+        ImageButton btn = (ImageButton) findViewById(btn_id);
+        btn.setVisibility(View.VISIBLE);
+    }
+
+    public void setInVisible(int btn_id){
+
+        ImageButton btn = (ImageButton) findViewById(btn_id);
+        btn.setVisibility(View.GONE);
+    }
+
+    public void initAnim(int btn_id, Animation animation){
+
+        ImageButton btn = (ImageButton) findViewById(btn_id);
+        btn.startAnimation(animation);
+    }
 }

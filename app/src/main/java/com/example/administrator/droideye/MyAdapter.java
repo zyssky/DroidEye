@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +20,8 @@ import java.util.Map;
  * Created by Administrator on 2016/12/23.
  */
 
-public class MyAdapter extends BaseAdapter {
-    private Context context;
+public class MyAdapter extends BaseAdapter implements Serializable{
+    transient private Context context;
     private int resource;
     private List<Map<String,Object>> objects;
     private LayoutInflater inflater;

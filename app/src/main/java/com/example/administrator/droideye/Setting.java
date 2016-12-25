@@ -54,7 +54,6 @@ public class Setting {
                     setting.addToWhiteList(app.processName);
             }
             preferences.edit().putBoolean(KEY.INITWHITELISTFLAG,true).commit();
-
         }
     }
 
@@ -71,9 +70,6 @@ public class Setting {
         whitelistProferenceEditor.putString(item,item);
         whitelistProferenceEditor.commit();
     }
-
-
-
 
     public void deleteFromWhiteList(String item){
         whitelistProferenceEditor.remove(item);

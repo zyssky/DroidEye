@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".TrafficMonitor.TrafficDetailActivity" />
+        <activity android:name=".Settings.SettingsActivity" />
         <service
             android:name=".Service.MonitorService"
             android:enabled="true"

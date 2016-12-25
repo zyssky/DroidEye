@@ -1,6 +1,10 @@
 package com.example.administrator.droideye.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by wand on 2016/12/8.
@@ -8,21 +12,32 @@ import java.io.Serializable;
 
 public class StatusLogger implements Serializable{
 
-    private boolean isFirstRun;
+    public HashMap<String , String> Status;
 
     public StatusLogger(){
-
-
+        Status = new HashMap<>();
     }
 
-    public boolean ifFirstRun(){
+    public void addAttrs(String key ,String value){
 
-        return isFirstRun;
+        Status.put(key,value);
     }
 
-    public void setNotFirstRun(){
+    public boolean deleteAttrs(String key){
 
-        isFirstRun = false;
+        boolean find = false;
+        Iterator it = Status.keySet().iterator();
+        while(it.hasNext()){
+
+            String temp = (String)it.next();
+            if ( temp.equals(key)){
+                //Find Target
+                Status.remove(key);
+                find = true;
+                break;
+            }
+        }
+        return find;
     }
 }
 

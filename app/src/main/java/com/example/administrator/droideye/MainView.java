@@ -2,6 +2,7 @@ package com.example.administrator.droideye;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -30,11 +32,14 @@ public class MainView extends RelativeLayout {
     private Button testBtn;
     private ListView listView;
     private Button showtraffic;
+    private ImageButton settings;
 
     public void init() {
         testBtn = (Button) findViewById(R.id.test);
         listView = (ListView) findViewById(R.id.runningapplist);
         showtraffic = (Button) findViewById(R.id.showtraffic);
+        settings    = (ImageButton) findViewById(R.id.settings);
+
 //        testBtn.setVisibility(Button.INVISIBLE);
 //        showtraffic.setVisibility(Button.INVISIBLE);
     }
@@ -43,6 +48,7 @@ public class MainView extends RelativeLayout {
     public void setTestBtnListener(OnClickListener listener){
         testBtn.setOnClickListener(listener);
         showtraffic.setOnClickListener(listener);
+        settings.setOnClickListener(listener);
     }
 
     public void setListViewListener(AdapterView.OnItemClickListener listener){

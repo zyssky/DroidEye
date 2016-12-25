@@ -7,10 +7,13 @@ import android.util.Log;
 import android.view.Window;
 
 //import com.example.administrator.droideye.JniUtils.jnitest;
+import com.example.administrator.droideye.Models.Configuration;
 import com.example.administrator.droideye.Models.DataBase.dbOpt;
 import com.example.administrator.droideye.R;
 import com.example.administrator.droideye.Utils.JniUtils;
 import com.example.administrator.droideye.Utils.ViewAux.ViewAnimation;
+
+import java.io.File;
 
 /**
  * Created by wand on 2016/12/3.
@@ -41,6 +44,8 @@ public class TrafficInsActivity extends AppCompatActivity implements TrafficInsL
 }
 
 
+
+
 class InitWorks extends Thread{
 
     dbOpt   dbopt   = null;
@@ -51,6 +56,8 @@ class InitWorks extends Thread{
         this.dbopt = dbopt;
     }
 
+
+
     @Override
     public void run(){
 
@@ -59,3 +66,4 @@ class InitWorks extends Thread{
 
     }
 }
+

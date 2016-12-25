@@ -38,6 +38,7 @@ public class AppTrafficMonitor {
     public List<HashMap<String,Object>> showApps(){
 
         //Haven't load into database yet.
+        int i = 0;
         List<HashMap<String,Object>> res = new ArrayList<HashMap<String, Object>>();
         List<PackageInfo> usingNetPackages = requireNetPackages(packageManager);
         for (PackageInfo appinfo : usingNetPackages){
@@ -48,6 +49,8 @@ public class AppTrafficMonitor {
             item.put("AppIcon",appinfo.applicationInfo.loadIcon(packageManager));
             item.put("AppName",appinfo.applicationInfo.loadLabel(packageManager));
             item.put("traffic",staticTraffic(appinfo));
+            item.put("packageName", appinfo.applicationInfo.packageName);
+            i+=1;
             res.add(item);
         }
         return res;

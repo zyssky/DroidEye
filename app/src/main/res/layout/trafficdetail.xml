@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <android.support.v7.widget.Toolbar
+        android:title="流量统计"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="流量统计"
+            android:textSize="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            />
+    </android.support.v7.widget.Toolbar>
+
+    <ImageButton
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="#00000000"
+        android:id="@+id/appicon" />
+
+
+    <TextView
+        android:text="AppName"
+        android:textSize="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_below="@id/toolbar"
+        android:layout_toRightOf="@id/appicon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appname" />
+
+    <TextView
+        android:text="PackageName"
+        android:textSize="15dp"
+        android:layout_below="@id/appname"
+        android:layout_toRightOf="@id/appicon"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:id="@+id/packagename" />
+
+    <TextView
+        android:text="流量详情"
+        android:textSize="18dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/appicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/trafficDetail" />
+
+    <TextView
+        android:text="OneMinTraffic"
+        android:textSize="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/trafficDetail"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="45dp"
+        android:id="@+id/onemin" />
+
+    <TextView
+        android:text="Infor"
+        android:textSize="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/onemin"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="65dp"
+        android:id="@+id/oneInfor" />
+
+    <TextView
+        android:text="FiveMinTraffic"
+        android:textSize="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/oneInfor"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="45dp"
+        android:id="@+id/fivemin" />
+
+    <TextView
+        android:text="Infor"
+        android:textSize="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fivemin"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="65dp"
+        android:id="@+id/fiveInfor" />
+
+    <TextView
+        android:text="TenMinTraffic"
+        android:textSize="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fiveInfor"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="45dp"
+        android:id="@+id/tenmin" />
+
+    <TextView
+        android:text="Infor"
+        android:textSize="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tenmin"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="65dp"
+        android:id="@+id/tenInfor" />
+
+
+
+
+</RelativeLayout>

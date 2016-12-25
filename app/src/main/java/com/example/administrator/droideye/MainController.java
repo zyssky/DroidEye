@@ -3,6 +3,7 @@ package com.example.administrator.droideye;
 import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.administrator.droideye.Models.Traffic;
 import com.example.administrator.droideye.Service.MonitorService;
+import com.example.administrator.droideye.Settings.SettingsActivity;
 import com.example.administrator.droideye.Views.ListFragment;
 import com.example.administrator.droideye.Models.Configuration;
 import com.example.administrator.droideye.TrafficMonitor.TrafficInsActivity;
@@ -96,8 +99,16 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
                 break;
             case R.id.showtraffic:
                 Intent intent = new Intent(listener.getActivity(), TrafficInsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 listener.getActivity().startActivity(intent);
+                break;
+            case R.id.settings:
+                //Enter Settings
+                Intent setting_intent = new Intent(listener.getActivity(), SettingsActivity.class);
+//                MyAdapter myAdapter = generateMyAdapter();
+//                setting_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                listener.getActivity().startActivity(setting_intent);
+                break;
             default:
                 Log.d(Configuration.click_listener_error,"Switch-Default Error.");
         }
@@ -122,5 +133,10 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
             }
         });
 
+    }
+
+    public MainController getme(){
+
+        return this;
     }
 }

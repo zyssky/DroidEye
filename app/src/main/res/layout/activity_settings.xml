@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.administrator.droideye.Settings.SettingsView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_set"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize"
+        android:id="@+id/Setoolbar"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DroidEye设置"
+            android:textSize="22dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="18dp"
+            />
+    </android.support.v7.widget.Toolbar>
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/Setoolbar"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layoutAnimation="@anim/anim_listview"
+        android:id="@+id/settinglist"
+        />
+
+
+</com.example.administrator.droideye.Settings.SettingsView>

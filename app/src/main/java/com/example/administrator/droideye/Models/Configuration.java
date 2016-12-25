@@ -54,11 +54,13 @@ public class Configuration {
     public static final String netflowlogpath   = basiclogpath + "/" + "newflow_logs";
     public static final String storagelogpath   = basiclogpath + "/" + "store_logs";
     public static final String defaultFilePath  = "/data/data/com.example.administrator.droideye/files";
-
+    public static final String stautsloggerpath = "/data/data/com.example.administrator.droideye/files/status";
 
     //Errors:
     public static final String db_error_log_head= "[*]DbError:";
     public static final String file_opt_error= "[*]FileOptError:";
     public static final String click_listener_error= "[*]ListenerError:";
 
+    //Runtime Settings
+    public static boolean isFirstRun = true;
 }
