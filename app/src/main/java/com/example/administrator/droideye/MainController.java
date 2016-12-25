@@ -52,7 +52,7 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
         view.setTestBtnListener(this);
         view.setListViewAdapter(generateMyAdapter());
 //        view.setListViewAdapter(generateAdapter(includeSystem));
-//        view.setListViewListener(this);
+        view.setListViewListener(this);
     }
 
     private MyAdapter generateMyAdapter(){
