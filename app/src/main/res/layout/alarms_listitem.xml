@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <ImageView
+        android:id="@+id/AlarmIcon"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp" />
+
+    <TextView
+        android:id="@+id/AlarmName"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="10dp"
+        android:singleLine="true"
+        android:layout_toRightOf="@id/AlarmIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/AlarmAllow"
+        android:layout_below="@id/AlarmName"
+        android:layout_toRightOf="@id/AlarmIcon"
+        android:textSize="17sp"
+        android:layout_marginLeft="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/AlarmBlock"
+        android:layout_below="@id/AlarmName"
+        android:layout_toRightOf="@id/AlarmAllow"
+        android:textSize="17sp"
+        android:layout_marginLeft="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/waketime"
+        android:textSize="17sp"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@id/waketime"
+        android:id="@+id/blocktime"
+        android:textSize="17sp"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

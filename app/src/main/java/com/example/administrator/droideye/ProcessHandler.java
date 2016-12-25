@@ -106,7 +106,8 @@ public class ProcessHandler {
         this.context = context;
         this.activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         this.packageManager = context.getPackageManager();
-        this.usageStatsManager=(UsageStatsManager) context.getSystemService(USAGE_STATS_SERVICE);
+        if(Build.VERSION.SDK_INT>=21)
+            this.usageStatsManager=(UsageStatsManager) context.getSystemService(USAGE_STATS_SERVICE);
     }
 
     public List<AndroidAppProcess> getRunningApps(){
@@ -120,6 +121,10 @@ public class ProcessHandler {
             Log.d(TAG, "processName: " + packageName + "  uid : " + pid);
         }
         return processInfoList;
+    }
+
+    public Drawable getAppIcon(String packagename){
+        return packageManager.getApplicationIcon(getSpecifyAppInfo(packagename));
     }
 
     public List<Map<String,Object>> getInstalledAppWithKillingPermission(){
@@ -338,30 +343,23 @@ public class ProcessHandler {
     }
 
 
-    public Long getAppInForegroundTime(String packageName){
-        getUsageStatsPermission();
-        long usedtime = -1;
-        long time =System.currentTimeMillis()-SystemClock.elapsedRealtime();
-        List<UsageStats> list=usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time, System.currentTimeMillis());
-        for (UsageStats u :
-                list) {
-            if (packageName.equals(u.getPackageName()))
-                usedtime = u.getTotalTimeInForeground();
-        }
-        return usedtime;
-    }
-
     public Long getAppBackgroundTime(String packageName){
-        getUsageStatsPermission();
-        long usedtime = -1;
-        long time =System.currentTimeMillis()-SystemClock.elapsedRealtime();
-        List<UsageStats> list=usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time, System.currentTimeMillis());
-        for (UsageStats u :
-                list) {
-            if (packageName.equals(u.getPackageName()))
-                usedtime = System.currentTimeMillis()-u.getLastTimeUsed();
+        if(Build.VERSION.SDK_INT>=21) {
+            getUsageStatsPermission();
+            long usedtime = -1;
+            long time = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+            List<UsageStats> list = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time, System.currentTimeMillis());
+            for (UsageStats u :
+                    list) {
+                if (packageName.equals(u.getPackageName()))
+                    usedtime = System.currentTimeMillis() - u.getLastTimeUsed();
+            }
+            return usedtime;
         }
-        return usedtime;
+        else{
+            long time = 0;
+            return time;
+        }
     }
 
 

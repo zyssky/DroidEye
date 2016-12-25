@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.administrator.droideye.HOOKS.*;
 import com.example.administrator.droideye.Service.MonitorService;
 import com.example.administrator.droideye.Views.ListFragment;
 import com.example.administrator.droideye.Models.Configuration;
@@ -50,6 +52,22 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
         view.setListViewAdapter(generateMyAdapter());
 //        view.setListViewAdapter(generateAdapter(includeSystem));
 //        view.setListViewListener(this);
+    }
+
+    public AlarmsAdapter generateVariousAdapter(int adapterType) {
+        switch (adapterType) {
+            case 0:
+                return new AlarmsAdapter(listener.getActivity(), UnbounceStatsCollection.getInstance().toAlarmArrayList(listener.getActivity()),
+                        R.layout.alarms_listitem, new int[]{R.id.AlarmIcon, R.id.AlarmName, R.id.AlarmAllow, R.id.AlarmBlock, R.id.waketime, R.id.blocktime});
+            case 1:
+                return new AlarmsAdapter(listener.getActivity(), UnbounceStatsCollection.getInstance().toServiceArrayList(listener.getActivity()),
+                        R.layout.alarms_listitem, new int[]{R.id.AlarmIcon, R.id.AlarmName, R.id.AlarmAllow, R.id.AlarmBlock, R.id.waketime, R.id.blocktime});
+            case 2:
+                return new AlarmsAdapter(listener.getActivity(),UnbounceStatsCollection.getInstance().toWakelockArrayList(listener.getActivity()),
+                        R.layout.alarms_listitem,new int[]{R.id.AlarmIcon,R.id.AlarmName,R.id.AlarmAllow,R.id.AlarmBlock,R.id.waketime,R.id.blocktime});
+            default:
+                return null;
+        }
     }
 
     private MyAdapter generateMyAdapter(){
@@ -90,9 +108,9 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
 //        listener.getActivity().startService(new Intent(listener.getActivity(), MonitorService.class));
         switch (v.getId()){
             case R.id.test:
-                view.setListViewAdapter(generateAdapter(!includeSystem));
-                includeSystem = !includeSystem;
-                ProcessHandler.getInstance().getAppUsedRecords();
+//                view.setListViewAdapter(generateAdapter(!includeSystem));
+//                includeSystem = !includeSystem;
+                view.setListViewAdapter(generateVariousAdapter(AlarmsAdapter.ALARMS));
                 break;
             case R.id.showtraffic:
                 Intent intent = new Intent(listener.getActivity(), TrafficInsActivity.class);
