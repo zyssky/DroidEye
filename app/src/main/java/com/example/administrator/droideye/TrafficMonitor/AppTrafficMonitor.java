@@ -112,6 +112,11 @@ public class AppTrafficMonitor {
         return FileUtils.formatFileSize(listener.getAppContext(),traffic);
     }
 
+    public static String printTraffic(long traffic,Context context){
+
+        return FileUtils.formatFileSize(context,traffic);
+    }
+
     public String staticTraffic(PackageInfo appinfo){
 
         //New type of static analyzing states here.

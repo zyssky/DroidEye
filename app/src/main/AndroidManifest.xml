@@ -20,7 +20,8 @@
         <meta-data android:value="42" android:name="xposedminversion"/>
         <meta-data android:value="capture the battery usage with apps actions! " android:name="xposeddescription"/>
         <activity android:name=".TrafficMonitor.TrafficInsActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Entry">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
