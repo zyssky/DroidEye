@@ -38,7 +38,7 @@ public class Wakelocks implements IXposedHookLoadPackage {
     private HashMap<String, Long> mLastAlarmAttempts = null; //The last time each alarm was allowed.
 
     private long mLastUpdateStats = 0;
-    private long mUpdateStatsFrequency = 300000; //Save every five minutes
+    private long mUpdateStatsFrequency = 60000; //Save every minutes
     private long mLastReloadPrefs = 0;
     private long mReloadPrefsFrequency = 60000; //Reload prefs every minute
 
