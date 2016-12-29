@@ -102,7 +102,8 @@ class oneMinMonitor extends Thread{
                     }else{
                         traffic.oneMinTrafficout = oneMinTraffic;
                     }
-//                    dbopt.selfdef_update_table("UPDATE traffic SET oneMinTrafficIn = ? WHERE appName = ?", {oneMinTraffic});
+                    dbopt.selfdef_update_table("UPDATE traffic SET oneMinTrafficIn = ? WHERE appName = ?", new Object[]{oneMinTraffic,
+                     appName});
                 }
             }
         }
@@ -155,7 +156,8 @@ class fiveMinMonitor extends Thread{
                 }else{
                     traffic.fiveMinTrafficout = fiveMinTraffic;
                 }
-                dbopt.add_traffic(traffic);
+                dbopt.selfdef_update_table("UPDATE traffic SET fiveMinTrafficIn = ? WHERE appName = ?", new Object[]{fiveMinTraffic,
+                        appName});
             }
         }
     }
@@ -207,7 +209,8 @@ class tenMinMonitor extends Thread{
                 }else{
                     traffic.tenMinTrafficout = tenMinTraffic;
                 }
-                dbopt.add_traffic(traffic);
+                dbopt.selfdef_update_table("UPDATE traffic SET tenMinTrafficIn = ? WHERE appName = ?", new Object[]{tenMinTraffic,
+                        appName});
             }
         }
     }

@@ -179,7 +179,7 @@ public class dbOpt {
             return true;
         }catch(Exception e){
             Log.d(Configuration.db_error_log_head,e.toString());
-            Toast.makeText(mContext,"Updating Table " + table_name + " Failed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext,"Updating Table " + "Update" + " Failed.", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
