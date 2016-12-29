@@ -94,7 +94,10 @@ public class WakelockStats extends BaseStats implements Serializable {
         // return (sb.toString());
 
         //return strLog;
-        return getFormattedTime(days, hours, minutes, seconds);
+        String time =  getFormattedTime(days, hours, minutes, seconds);
+        if(time.length()<3)
+            return "00:"+time;
+        return time;
     }
 
     public long getBlockedDuration() {

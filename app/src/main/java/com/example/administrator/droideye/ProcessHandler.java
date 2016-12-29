@@ -124,7 +124,15 @@ public class ProcessHandler {
     }
 
     public Drawable getAppIcon(String packagename){
-        return packageManager.getApplicationIcon(getSpecifyAppInfo(packagename));
+        packagename = packagename.split("[:/]")[0];
+        Drawable drawable;
+        try {
+            drawable = packageManager.getApplicationIcon(getSpecifyAppInfo(packagename));
+        }catch (Exception e){
+            drawable = context.getResources().getDrawable(android.R.drawable.ic_lock_lock);
+            Log.d(TAG, "getAppIcon: can not find package icon of "+packagename);
+        }
+        return drawable;
     }
 
     public List<Map<String,Object>> getInstalledAppWithKillingPermission(){

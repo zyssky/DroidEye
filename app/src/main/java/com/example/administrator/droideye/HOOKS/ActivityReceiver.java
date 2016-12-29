@@ -30,12 +30,13 @@ public class ActivityReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-//        String action = intent.getAction();
-//        if (action.equals(CREATE_FILES_ACTION)) {
-//            UnbounceStatsCollection.getInstance().createFiles(context);
-//        } else if (action.equals(RESET_FILES_ACTION)) {
-//            UnbounceStatsCollection.getInstance().recreateFiles(context);
-//        } else if (action.equals(PUSH_NETWORK_STATS)) {
+        String action = intent.getAction();
+        if (action.equals(CREATE_FILES_ACTION)) {
+            UnbounceStatsCollection.getInstance().createFiles(context);
+        } else if (action.equals(RESET_FILES_ACTION)) {
+            UnbounceStatsCollection.getInstance().recreateFiles(context);
+        }
+//        else if (action.equals(PUSH_NETWORK_STATS)) {
 //            UnbounceStatsCollection.getInstance().pushStatsToNetworkInternal(context);
 //        }
 

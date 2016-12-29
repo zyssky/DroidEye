@@ -48,8 +48,8 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
     testCompile 'junit:junit:4.12'
-    compile project(':jnilibs')
+//    compile project(':jnilibs')
     //    provided 'de.robv.android.xposed:api:82'
     //    provided 'de.robv.android.xposed:api:82:sources'
-    compile files('libs/XposedBridgeApi.jar')
+    provided files('lib/XposedBridgeApi.jar')
 }

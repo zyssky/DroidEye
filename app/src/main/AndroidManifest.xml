@@ -42,6 +42,20 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".HOOKS.ActivityReceiver"
+            android:exported="true" android:enabled="true">
+            <intent-filter>
+                <action android:name="com.example.administrator.droideye.STATS_REFRESHED_ACTION"/>
+                <action android:name="com.example.administrator.droideye.CREATE_FILES_ACTION"/>
+                <action android:name="com.example.administrator.droideye.RESET_FILES_ACTION"/>
+                <action android:name="com.example.administrator.droideye.PUSH_NETWORK_STATS"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".HOOKS.XposedReceiver"
+            />
+
     </application>
 
 </manifest>

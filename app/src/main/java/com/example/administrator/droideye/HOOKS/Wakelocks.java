@@ -45,33 +45,8 @@ public class Wakelocks implements IXposedHookLoadPackage {
     private final BroadcastReceiver mBroadcastReceiver = new XposedReceiver();
     private boolean mRegisteredRecevier = false;
 
-    XSharedPreferences m_prefs;
+    public XSharedPreferences m_prefs;
     public static HashMap<IBinder, InterimEvent> mCurrentWakeLocks;
-
-//    @Override
-//    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
-//        XposedBridge.log("zyssky why!");
-//
-//        if (lpparam.packageName.equals("android")) {
-//
-//            m_prefs = new XSharedPreferences("com.example.administrator.droideye");
-//            m_prefs.reload();
-//
-//            defaultLog("Version " + VERSION);
-//
-//            mCurrentWakeLocks = new HashMap<IBinder, InterimEvent>();
-//            mLastWakelockAttempts = new HashMap<String, Long>();
-//            mLastAlarmAttempts = new HashMap<String, Long>();
-//
-//            hookAlarms(lpparam);
-//            hookWakeLocks(lpparam);
-//            hookServices(lpparam);
-//            resetFilesIfNeeded(null);
-//        } else if (lpparam.packageName.equals("com.example.administrator.droideye")) {
-//            hookAmplifyClasses(lpparam);
-//
-//        }
-//    }
 
 
     private void resetFilesIfNeeded(Context context) {
@@ -741,10 +716,11 @@ public class Wakelocks implements IXposedHookLoadPackage {
 
     @Override
     public void handleLoadPackage(LoadPackageParam loadPackageParam) throws Throwable {
-        XposedBridge.log("zyssky why!");
         Log.d(TAG, "handleLoadPackage: zyssky");
 
         if (loadPackageParam.packageName.equals("android")) {
+
+            XposedBridge.log("i am here");
 
             m_prefs = new XSharedPreferences("com.example.administrator.droideye");
             m_prefs.reload();

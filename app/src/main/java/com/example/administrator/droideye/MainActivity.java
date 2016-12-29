@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import com.example.administrator.droideye.Service.MonitorService;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity implements InteractionListener {
 
     @Override
@@ -18,6 +20,23 @@ public class MainActivity extends AppCompatActivity implements InteractionListen
         mainView.init();
         MainController mainController = new MainController(mainView,this);
         startService(new Intent(this, MonitorService.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+
+    public boolean isUnbounceServiceRunning() {
+        //The Unbounce hook changes this to true.
+        return false;
+    }
+
+    public String getAmplifyKernelVersion() {
+        //The Unbounce hook changes this to true.
+        return "0";
+    }
+
+
+
+    public boolean isXposedRunning() {
+//        return true;
+        return new File("/data/data/de.robv.android.xposed.installer/bin/XposedBridge.jar").exists();
     }
 
     @Override
