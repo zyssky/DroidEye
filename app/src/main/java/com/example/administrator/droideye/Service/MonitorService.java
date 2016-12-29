@@ -10,6 +10,8 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import com.example.administrator.droideye.KEY;
+import com.example.administrator.droideye.Models.DataBase.dbOpt;
+import com.example.administrator.droideye.Models.Traffic;
 import com.example.administrator.droideye.ProcessHandler;
 import com.example.administrator.droideye.Setting;
 
@@ -41,9 +43,15 @@ public class MonitorService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         mission1();
         sendBroadcast();
+        dbOpt dbopt = new dbOpt(this);
+        List<Traffic> traffics = dbopt.userdef_query("traffic", "SELECT * FROM traffic", null);
+        trafficMonit trafficMonitor = new trafficMonit(dbopt, traffics);
+        trafficMonitor.start();
+
         Log.d(TAG, "onStartCommand: "+sleeptime);
         return super.onStartCommand(intent, flags, startId);
     }
+
 
     private void sendBroadcast(){
         Intent intent = new Intent(this,StartUpReceiver.class);
@@ -76,4 +84,6 @@ public class MonitorService extends Service {
         }
 
     }
+
+
 }

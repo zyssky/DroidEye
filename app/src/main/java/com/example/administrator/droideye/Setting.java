@@ -62,7 +62,6 @@ public class Setting {
                     setting.addToWhiteList(app.processName);
             }
             preferences.edit().putBoolean(KEY.INITWHITELISTFLAG,true).commit();
-
         }
     }
 

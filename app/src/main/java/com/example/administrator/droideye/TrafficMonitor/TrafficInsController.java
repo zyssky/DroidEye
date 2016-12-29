@@ -1,7 +1,11 @@
 package com.example.administrator.droideye.TrafficMonitor;
 
+import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,6 +19,8 @@ import com.example.administrator.droideye.R;
 import com.example.administrator.droideye.Utils.FileUtils;
 import com.example.administrator.droideye.Utils.ViewAux.ViewAnimation;
 
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,10 +87,29 @@ public class TrafficInsController implements View.OnClickListener,AdapterView.On
                 {
                     ViewAnimation.Rotation_Animation(view.menuButton,700,0,-90);
                     counter ++;
+                    //Adding effects of eliminating button
+//                    view.setBtnTransparent(R.id.five);
+//                    Animation animation = AnimationUtils.loadAnimation(listener.getAppContext(), R.anim.btn_anim);
+                    Animation animation = ViewAnimation.btn_shiftAnimation(1000,0,-6,0,0,1,0);
+                    view.initAnim(R.id.one, animation);
+                    view.setInVisible(R.id.one);
+                    view.initAnim(R.id.five, animation);
+                    view.setInVisible(R.id.five);
+                    view.initAnim(R.id.ten, animation);
+                    view.setInVisible(R.id.ten);
                 }
                 else{
                     ViewAnimation.Rotation_Animation(view.menuButton,700,-90,0);
                     counter ++;
+                    Animation animation = ViewAnimation.btn_shiftAnimation(1000,-6,0,0,0,0,1);
+
+                    view.initAnim(R.id.one, animation);
+                    view.setVisible(R.id.one);
+                    view.initAnim(R.id.five,animation);
+                    view.setVisible(R.id.five);
+                    view.initAnim(R.id.ten, animation);
+                    view.setVisible(R.id.ten);
+
                 }
                 FileUtils.createFile("tester");
                 FileUtils.createFolder(Configuration.defaultFilePath,"/ABCDEFG");
@@ -112,8 +137,28 @@ public class TrafficInsController implements View.OnClickListener,AdapterView.On
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position , long id){
 
-        String pos = position + "";
-        Toast.makeText(listener.getAppContext(), "Entering Number " + pos, Toast.LENGTH_SHORT).show();
+        switch(parent.getId()){
+
+            case R.id.trafficList:
+
+                ShowTrafficDetail(position);
+        }
+
+    }
+
+    public void ShowTrafficDetail(int position){
+
+        Intent intent = new Intent(listener.getAppContext(), TrafficDetailActivity.class);
+        HashMap map   = trafficItems.get(position);
+        Bitmap bmp    = ((BitmapDrawable)(map.get("AppIcon"))).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100 , baos);
+        byte[] bitmapBytes = baos.toByteArray();
+        intent.putExtra("AppIcon", bitmapBytes);
+        intent.putExtra("AppName", (String)map.get("AppName"));
+        intent.putExtra("packageName", (String)map.get("packageName"));
+        listener.getAppContext().startActivity(intent);
+
     }
 
 }
