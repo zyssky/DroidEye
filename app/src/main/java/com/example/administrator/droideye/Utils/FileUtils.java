@@ -100,6 +100,10 @@ public class FileUtils {
     public static boolean writetoFile(String filepath, String content){
 
         try {
+            File file = new File(filepath);
+            if( !file.exists()){
+                file.createNewFile();
+            }
             String lines[] = content.split("\n");
             FileOutputStream out = new FileOutputStream(filepath);
             PrintStream printStream = new PrintStream(out);

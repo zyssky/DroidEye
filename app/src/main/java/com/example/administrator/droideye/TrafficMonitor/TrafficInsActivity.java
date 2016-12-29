@@ -122,7 +122,7 @@ class InitWorks extends Thread{
         File file = new File(Configuration.networktypepath);
         if ( !file.exists()){
 
-            FileUtils.createFile("network");
+            FileUtils.createFile("networks");
             FileUtils.writetoFile(Configuration.networktypepath, "Watching|"+network);
             return true;
         }else{

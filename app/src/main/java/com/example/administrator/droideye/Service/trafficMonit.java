@@ -41,7 +41,7 @@ public class trafficMonit extends Thread{
 
             try {
                 //Sleep And Write Data Into Database.
-                Thread.sleep(3000);
+                Thread.sleep(10000);
             } catch (Exception e) {
                 Log.d(Configuration.threadsleeperror, e.toString());
             }
@@ -77,7 +77,7 @@ class oneMinMonitor extends Thread{
 
                 try {
                     //Sleep And Write Data Into Database.
-                    Thread.sleep(5000);
+                    Thread.sleep(60000);
                 }catch(Exception e){
                     Log.d(Configuration.threadsleeperror, e.toString());
                 }
@@ -102,7 +102,7 @@ class oneMinMonitor extends Thread{
                     }else{
                         traffic.oneMinTrafficout = oneMinTraffic;
                     }
-                    dbopt.add_traffic(traffic);
+//                    dbopt.selfdef_update_table("UPDATE traffic SET oneMinTrafficIn = ? WHERE appName = ?", {oneMinTraffic});
                 }
             }
         }
@@ -130,7 +130,7 @@ class fiveMinMonitor extends Thread{
 
             try {
                 //Sleep And Write Data Into Database.
-                Thread.sleep(5000);
+                Thread.sleep(300000);
             }catch(Exception e){
                 Log.d(Configuration.threadsleeperror, e.toString());
             }
@@ -182,7 +182,7 @@ class tenMinMonitor extends Thread{
 
             try {
                 //Sleep And Write Data Into Database.
-                Thread.sleep(5000);
+                Thread.sleep(600000);
             }catch(Exception e){
                 Log.d(Configuration.threadsleeperror, e.toString());
             }

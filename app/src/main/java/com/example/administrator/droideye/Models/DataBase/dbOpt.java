@@ -171,6 +171,20 @@ public class dbOpt {
         }
     }
 
+    public boolean selfdef_update_table(String Sql, Object[] obj){
+
+        try{
+
+            db.execSQL(Sql, obj);
+            return true;
+        }catch(Exception e){
+            Log.d(Configuration.db_error_log_head,e.toString());
+            Toast.makeText(mContext,"Updating Table " + table_name + " Failed.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+
 
     //Self-DEFINED Query Func---
     public List<Traffic> userdef_query(String table_name, String Query_SQL, String[] values){

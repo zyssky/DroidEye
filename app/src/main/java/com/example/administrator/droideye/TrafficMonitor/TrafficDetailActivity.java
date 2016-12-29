@@ -6,13 +6,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.administrator.droideye.Models.DataBase.dbOpt;
+import com.example.administrator.droideye.Models.Traffic;
 import com.example.administrator.droideye.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wand on 2016/12/25.
@@ -36,6 +41,13 @@ public class TrafficDetailActivity extends AppCompatActivity {
         appname.setText(appName);
         packagename.setText(packageName);
         appicon.setImageBitmap(bitmap);
-//        appicon.setImageDrawable((Drawable) appIcon);
+
+        //Fetch Content From Database
+        dbOpt dbopt = new dbOpt(this);
+        List<Traffic> traffic = new ArrayList<Traffic>();
+        String[] app = new String[]{appName};
+        traffic = dbopt.userdef_query("traffic", "SELECT * FROM traffic WHERE appName = ?", app );
+        Log.d("Show Me Your Content", traffic.get(0).appName);
+
     }
 }
