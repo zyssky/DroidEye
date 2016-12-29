@@ -76,6 +76,7 @@ public class dbOpt {
     public boolean add_traffic(Traffic traffic){
         try{
             db.execSQL("INSERT INTO traffic(appName," +
+                    "uid," +
                     "startTime," +
                     "totalTraffic," +
                     "tenMinTrafficin," +
@@ -95,10 +96,11 @@ public class dbOpt {
                     "KILLORWARN1," +
                     "KILLORWARN2," +
                     "KILLORWARN3)" +
-                    " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     new Object[]{
 
                             traffic.appName,
+                            traffic.uid,
                             traffic.startTime,
                             traffic.totalTraffic,
                             traffic.tenMinTrafficin,
@@ -171,9 +173,9 @@ public class dbOpt {
 
 
     //Self-DEFINED Query Func---
-    public List<Object> userdef_query(String table_name, String Query_SQL, String[] values){
+    public List<Traffic> userdef_query(String table_name, String Query_SQL, String[] values){
 
-        List<Object> ret = new ArrayList<Object>();
+        List<Traffic> ret = new ArrayList<Traffic>();
         //WARNING: Using This Func needs to be with caution!
         try {
             Cursor cursor = null;
@@ -185,20 +187,30 @@ public class dbOpt {
                         while(cursor.moveToNext()){
 
                             AppInfo appinfo = null;
-                            ret.add(appinfo);
+
                         }
                         cursor.close();
-                        return ret;
+                        return null;
+
                     case "traffic":
                         cursor = db.rawQuery(Query_SQL, values);
                         while (cursor.moveToNext()){
 
-                            Traffic traffic = null;
+                            Traffic traffic = new Traffic();
+                            traffic.appName = cursor.getString(0);
+                            traffic.uid     = cursor.getString(1);
+                            traffic.startTime = cursor.getString(2);
+                            traffic.totalTraffic = cursor.getString(3);
+                            traffic.tenMinTrafficin = cursor.getString(4);
+                            traffic.tenMinTrafficout= cursor.getString(5);
+                            traffic.fiveMinTrafficin= cursor.getString(6);
+                            traffic.fiveMinTrafficout = cursor.getString(7);
+                            traffic.oneMinTrafficin = cursor.getString(8);
+                            traffic.oneMinTrafficout= cursor.getString(9);
                             ret.add(traffic);
                         }
                         cursor.close();
                         return ret;
-
 
                     default:
 

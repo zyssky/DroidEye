@@ -31,8 +31,6 @@ public class AppTrafficMonitor {
         this.listener = listener;
         this.packageManager = listener.getAppContext().getPackageManager();
         //Here Test for TrafficStatus Class:
-        CheckTraffic cktraffic = new CheckTraffic(listener);
-        cktraffic.start();
     }
 
     public List<HashMap<String,Object>> showApps(){
@@ -58,7 +56,7 @@ public class AppTrafficMonitor {
 
 
     //Acquire App Names requiring
-    public List<PackageInfo> requireNetPackages(PackageManager packageManager){
+    public static List<PackageInfo> requireNetPackages(PackageManager packageManager){
 
         List<PackageInfo> res         = new ArrayList<PackageInfo>();
         List<PackageInfo> packinfos   = packageManager.getInstalledPackages(
@@ -94,17 +92,17 @@ public class AppTrafficMonitor {
         return res;
     }
 
-    public long getTrafficIn(int uId){
+    public static long getTrafficIn(int uId){
 
         return TrafficStats.getUidRxBytes(uId);
     }
 
-    public long getTrafficOut(int uId){
+    public static long getTrafficOut(int uId){
 
         return TrafficStats.getUidTxBytes(uId);
     }
 
-    public int getUidFromInfo(PackageInfo info){
+    public static int getUidFromInfo(PackageInfo info){
 
         return info.applicationInfo.uid;
     }
@@ -131,24 +129,4 @@ public class AppTrafficMonitor {
 //    }
 }
 //
-class CheckTraffic extends Thread{
 
-    TrafficInsListener listener;
-    public CheckTraffic(TrafficInsListener listener){
-        this.listener = listener;
-    }
-
-    @Override
-    public void run(){
-
-        while(true){
-            try{
-                Thread.sleep(2000);
-                long temp = TrafficStats.getTotalRxBytes()+TrafficStats.getTotalTxBytes();
-                Log.d("Traffic Status:" , FileUtils.formatFileSize(listener.getAppContext(),temp));
-            }catch(Exception e){
-                Log.d(Configuration.file_opt_error,e.toString());
-            }
-        }
-    }
-}

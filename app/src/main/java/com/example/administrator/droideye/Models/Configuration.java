@@ -12,6 +12,7 @@ public class Configuration {
     public static final String create_header    = "CREATE TABLE IF NOT EXISTS ";
     public static final String create_traffic   = create_header + "traffic(" +
             "appName TEXT PRIMARY KEY ," +
+            "uid TEXT ," +
             "startTime          TEXT , " +
             "totalTraffic       TEXT , " + //Using TEXT REPRESENT Bytes Afraid of Overflow.
             "tenMinTrafficin    TEXT , " +
@@ -30,8 +31,7 @@ public class Configuration {
             "LimitTrafficQuant3 TEXT , " +
             "KILLORWARN1      INTEGER, " +
             "KILLORWARN2      INTEGER, " +
-            "KILLORWARN3      INTEGER, " +
-            "FOREIGN KEY(appName) REFERENCES appinfo(appName)" +
+            "KILLORWARN3      INTEGER  " +
             ");";
     //
 
@@ -55,12 +55,15 @@ public class Configuration {
     public static final String storagelogpath   = basiclogpath + "/" + "store_logs";
     public static final String defaultFilePath  = "/data/data/com.example.administrator.droideye/files";
     public static final String stautsloggerpath = "/data/data/com.example.administrator.droideye/files/status";
+    public static final String networktypepath  = "/data/data/com.example.administrator.droideye/files/networks";
 
     //Errors:
     public static final String db_error_log_head= "[*]DbError:";
     public static final String file_opt_error= "[*]FileOptError:";
     public static final String click_listener_error= "[*]ListenerError:";
+    public static final String threadsleeperror = "[*]ThreadSleep Error:";
 
     //Runtime Settings
     public static boolean isFirstRun = true;
+    public static boolean inwifimode = true;
 }

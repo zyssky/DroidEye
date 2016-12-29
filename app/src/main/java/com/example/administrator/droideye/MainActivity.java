@@ -50,11 +50,12 @@ class StartWorks extends Thread{
         if (file.exists()){
 
             //Already there , not first Run.
+            Configuration.isFirstRun = false;
             return;
         }
         else{
 
-            Configuration.isFirstRun = false;
+
             //Serialize statuslogger first
             try{
                 StatusLogger stlogger = new StatusLogger();

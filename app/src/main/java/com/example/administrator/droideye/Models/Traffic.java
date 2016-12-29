@@ -10,6 +10,7 @@ public class Traffic{
 
     //Characters in Traffic
     public String appName           = null;
+    public String uid               = null;
     public String startTime         = null;
     public String totalTraffic      = null;
     public String tenMinTrafficin   = null;
@@ -31,16 +32,22 @@ public class Traffic{
     public String KILLORWARN3       = null;
 
 
+    public Traffic(){
+
+    }
+
     //Simple Init Model
-    public Traffic(String appName, String startTime){
+    public Traffic(String appName, String uid, String startTime){
 
         this.appName   = appName;
+        this.uid       = uid;
         this.startTime = startTime;
     }
 
-    public Traffic(String appName, String startTime, String totalTraffic){
+    public Traffic(String appName, String uid , String startTime, String totalTraffic){
 
         this.appName        = appName;
+        this.uid            = uid;
         this.startTime      = startTime;
         this.totalTraffic   = totalTraffic;
     }
