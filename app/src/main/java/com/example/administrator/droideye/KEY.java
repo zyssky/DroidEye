@@ -11,4 +11,6 @@ public class KEY {
     public final static String ADDDEFAULTWHITELIST = "FIRST";
     public final static String INITWHITELISTFLAG = "FLAG";
     public final static String SLEEPTIME = "SLEEP";
+    public final static String XPOSESETTING = "com.example.administrator.droideye_preferences";
+
 }
