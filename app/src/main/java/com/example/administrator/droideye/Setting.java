@@ -5,8 +5,12 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
+import com.example.administrator.droideye.HOOKS.Wakelocks;
+
 import java.util.List;
 import java.util.Map;
+
+import de.robv.android.xposed.XSharedPreferences;
 
 /**
  * Created by Administrator on 2016/12/16.
@@ -21,7 +25,10 @@ public class Setting {
     private static Setting setting;
     private static boolean isInited = false;
 
+
     private static int defduration = 1800000;
+
+    private SharedPreferences m_prefs ;
 
     public final static String TAG = Setting.class.getSimpleName();
 
@@ -30,6 +37,7 @@ public class Setting {
         processPreferences = context.getSharedPreferences(KEY.PROCESS,Context.MODE_PRIVATE);
         whitelistProferenceEditor = context.getSharedPreferences(KEY.WHITELIST, Context.MODE_PRIVATE).edit();
         whitelistProference = context.getSharedPreferences(KEY.WHITELIST,Context.MODE_PRIVATE);
+        m_prefs = context.getSharedPreferences(KEY.XPOSESETTING,Context.MODE_PRIVATE);
     }
 
     public static void init(Context context){
@@ -57,9 +65,57 @@ public class Setting {
         }
     }
 
+    public void changeServiceStatus(String serviceName,boolean status){
+        m_prefs.edit().putBoolean("service_" + serviceName + "_enabled",status).commit();
+
+        return;
+    }
+
+    public void changeWakelockStatus(String wakelockName,boolean status){
+        m_prefs.edit().putBoolean("wakelock_" + wakelockName + "_enabled",status).commit();
+
+        return;
+    }
+
+    public void changeAlarmStatus(String alarmName,boolean status){
+        m_prefs.edit().putBoolean("alarm_" + alarmName + "_enabled",status).commit();
+
+        return;
+    }
+
+    public void changeWakelockAllowTime(String wakelockName,long time){
+        m_prefs.edit().putLong("wakelock_" + wakelockName + "_seconds",time).commit();
+
+        return;
+    }
+
+    public void changeServiceAllowTime(String serviceName,long time){
+        m_prefs.edit().putLong("service_" + serviceName + "_seconds",time).commit();
+
+        return;
+    }
+
+    public void changeAlarmAllowTime(String alarmName,long time){
+        m_prefs.edit().putLong("alarm_" + alarmName + "_seconds",time).commit();
+
+        return;
+    }
+
     public void setDurationOfBackgroundProcess(long lastmillisecond){
         processPreferencesEditor.putLong(KEY.DURATION,lastmillisecond);
         processPreferencesEditor.commit();
+    }
+
+    public boolean getAlarmStatus(String name){
+        return m_prefs.getBoolean("alarm_" + name + "_enabled",false);
+    }
+
+    public boolean getServiceStatus(String name){
+        return m_prefs.getBoolean("service_" + name + "_enabled",false);
+    }
+
+    public boolean getWakelocktatus(String name){
+        return m_prefs.getBoolean("wakelock_" + name + "_enabled",false);
     }
 
     public int getDDurationOfBackgroundProcess(){

@@ -10,9 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import com.example.administrator.droideye.HOOKS.*;
 
 import com.example.administrator.droideye.Models.Traffic;
 import com.example.administrator.droideye.Service.MonitorService;
@@ -45,6 +48,12 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
         ProcessHandler.init(listener.getActivity());
         Setting.init(listener.getActivity());
         includeSystem = false;
+
+//        if(RootHelper.isDeviceRooted()) {
+//            String apkRoot = "chmod 777 " + listener.getActivity().getPackageCodePath();
+//            RootHelper.RootCommand(apkRoot);
+//        }
+
         initValuesOnView();
     }
 
@@ -52,7 +61,24 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
         view.setTestBtnListener(this);
         view.setListViewAdapter(generateMyAdapter());
 //        view.setListViewAdapter(generateAdapter(includeSystem));
-//        view.setListViewListener(this);
+        view.setListViewListener(this);
+    }
+
+    public AlarmsAdapter generateVariousAdapter(int adapterType) {
+        switch (adapterType) {
+            case 0:
+                AlarmsAdapter adapter =new  AlarmsAdapter(listener.getActivity(), UnbounceStatsCollection.getInstance().toAlarmArrayList(listener.getActivity()),
+                        R.layout.alarms_listitem, new int[]{R.id.AlarmIcon, R.id.AlarmName, R.id.AlarmAllow, R.id.AlarmBlock, R.id.waketimelable, R.id.waketime},AlarmsAdapter.ALARMS);
+                return adapter;
+            case 1:
+                return new AlarmsAdapter(listener.getActivity(), UnbounceStatsCollection.getInstance().toServiceArrayList(listener.getActivity()),
+                        R.layout.alarms_listitem, new int[]{R.id.AlarmIcon, R.id.AlarmName, R.id.AlarmAllow, R.id.AlarmBlock, R.id.waketimelable, R.id.waketime},AlarmsAdapter.SERVICES);
+            case 2:
+                return new AlarmsAdapter(listener.getActivity(),UnbounceStatsCollection.getInstance().toWakelockArrayList(listener.getActivity()),
+                        R.layout.alarms_listitem,new int[]{R.id.AlarmIcon,R.id.AlarmName,R.id.AlarmAllow,R.id.AlarmBlock,R.id.waketimelable,R.id.waketime},AlarmsAdapter.WAKELOCKS);
+            default:
+                return null;
+        }
     }
 
     private MyAdapter generateMyAdapter(){
@@ -87,15 +113,19 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
         fragmentTransaction.commit();
     }
 
+    private static int testposition = 0;
+
     @Override
     public void onClick(View v) {
 //        listener.close();
 //        listener.getActivity().startService(new Intent(listener.getActivity(), MonitorService.class));
         switch (v.getId()){
             case R.id.test:
-                view.setListViewAdapter(generateAdapter(!includeSystem));
-                includeSystem = !includeSystem;
-                ProcessHandler.getInstance().getAppUsedRecords();
+//                view.setListViewAdapter(generateAdapter(!includeSystem));
+//                includeSystem = !includeSystem;
+                view.setListViewAdapter(generateVariousAdapter(testposition));
+                testposition+=1;
+                testposition%=3;
                 break;
             case R.id.showtraffic:
                 Intent intent = new Intent(listener.getActivity(), TrafficInsActivity.class);
@@ -132,7 +162,6 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
                 return stopApp((String) map.get("packagename"));
             }
         });
-
     }
 
     public MainController getme(){
