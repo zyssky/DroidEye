@@ -15,7 +15,7 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button alarm;
     private Button service;
-    private ImageButton wakelock;
+    private Button wakelock;
     private ListView listView;
 
     @Override
@@ -24,7 +24,7 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_wake_up);
         alarm = (Button) findViewById(R.id.alarm);
         service = (Button) findViewById(R.id.service);
-        wakelock = (ImageButton) findViewById(R.id.wakeup);
+        wakelock = (Button) findViewById(R.id.wakeup);
         listView = (ListView) findViewById(R.id.wakeuplist);
         listView.setAdapter(generateVariousAdapter(AlarmsAdapter.ALARMS));
         alarm.setOnClickListener(this);
