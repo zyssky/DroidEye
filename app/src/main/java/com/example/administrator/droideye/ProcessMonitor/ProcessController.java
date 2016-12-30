@@ -53,8 +53,8 @@ public class ProcessController implements View.OnClickListener,AdapterView.OnIte
 
     void initValuesOnView(){
         view.setTestBtnListener(this);
-        view.setListViewAdapter(generateMyAdapter());
-//        view.setListViewAdapter(generateAdapter(includeSystem));
+//        view.setListViewAdapter(generateMyAdapter());
+        view.setListViewAdapter(generateAdapter(includeSystem));
         view.setListViewListener(this);
     }
 
@@ -112,14 +112,15 @@ public class ProcessController implements View.OnClickListener,AdapterView.OnIte
             case R.id.test:
 //                view.setListViewAdapter(generateAdapter(!includeSystem));
 //                includeSystem = !includeSystem;
-                view.setListViewAdapter(generateVariousAdapter(testposition));
-                testposition+=1;
-                testposition%=3;
+                includeSystem = false;
+                view.setListViewAdapter(generateAdapter(includeSystem));
                 break;
             case R.id.showtraffic:
-                Intent intent = new Intent(listener.getActivity(), TrafficInsActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                listener.getActivity().startActivity(intent);
+//                Intent intent = new Intent(listener.getActivity(), TrafficInsActivity.class);
+////                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                listener.getActivity().startActivity(intent);
+                includeSystem = true;
+                view.setListViewAdapter(generateAdapter(includeSystem));
                 break;
             case R.id.settings:
                 //Enter Settings
