@@ -19,28 +19,23 @@
         <Button
             android:layout_width="50dp"
             android:layout_height="50dp"
-
             android:id="@+id/alarm"
-            android:background="@drawable/ic_alarm"
+            android:background="@drawable/alerticon"
             android:layout_marginLeft="30dp"/>
 
         <Button
             android:layout_width="50dp"
             android:layout_height="50dp"
-
-            android:layout_toRightOf="@id/alarm"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/ic_service"
+            android:background="@drawable/services"
             android:id="@+id/service"/>
 
         <Button
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toRightOf="@id/service"
-
-            android:text="Wakeup"
             android:id="@+id/wakeup"
-            android:src="@drawable/ic_wakelock" />
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/ic_wakelock"/>
 
 
 
