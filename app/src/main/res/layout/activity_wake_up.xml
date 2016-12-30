@@ -17,29 +17,29 @@
         android:layout_alignParentTop="true">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Alarm"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
             android:id="@+id/alarm"
+            android:background="@drawable/ic_alarm"
             android:layout_marginLeft="30dp"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Service"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
             android:layout_toRightOf="@id/alarm"
             android:layout_marginLeft="15dp"
+            android:background="@drawable/ic_service"
             android:id="@+id/service"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/service"
-            android:layout_marginLeft="50dp"
-            android:text="Wakeup"
+            android:layout_marginLeft="15dp"
             android:id="@+id/wakeup"
-            android:src="@drawable/waker"
-            />
+            android:src="@drawable/ic_wakelock" />
 
 
 
