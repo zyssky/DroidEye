@@ -1,10 +1,17 @@
 package com.example.administrator.droideye.Settings;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.example.administrator.droideye.Models.Configuration;
 import com.example.administrator.droideye.R;
@@ -93,8 +100,21 @@ public class SettingsController implements AdapterView.OnItemClickListener{
         switch(parent.getId()){
 
             case R.id.settinglist:
+                LayoutInflater inflater = LayoutInflater.from(settingsListener.getAppContext());
+                final View layout = inflater.inflate(R.layout.dialog, null);
 
-
+                new AlertDialog.Builder(settingsListener.getAppContext()).setTitle("限流设定").
+                        setView(layout).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(settingsListener.getAppContext(), "OK", Toast.LENGTH_SHORT).show();
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(settingsListener.getAppContext(), "Canceled.", Toast.LENGTH_SHORT).show();
+                    }
+                }).show();
                 break;
 
             default:
