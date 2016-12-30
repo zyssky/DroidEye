@@ -66,13 +66,13 @@ public class Wakelocks implements IXposedHookLoadPackage {
     }
 
     private void hookAmplifyClasses(LoadPackageParam lpparam) {
-        findAndHookMethod("com.example.administrator.droideye.MainActivity", lpparam.classLoader, "isUnbounceServiceRunning", new XC_MethodHook() {
+        findAndHookMethod("com.example.administrator.droideye.ProcessMonitor.WakeUpActivity", lpparam.classLoader, "isUnbounceServiceRunning", new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 param.setResult(true);
             }
         });
-        findAndHookMethod("com.example.administrator.droideye.MainActivity", lpparam.classLoader, "getAmplifyKernelVersion", new XC_MethodHook() {
+        findAndHookMethod("com.example.administrator.droideye.ProcessMonitor.WakeUpActivity", lpparam.classLoader, "getAmplifyKernelVersion", new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 param.setResult(VERSION);

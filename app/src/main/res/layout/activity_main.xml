@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.administrator.droideye.MainView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.administrator.droideye.ProcessMonitor.ProcessView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.droideye.MainActivity">
+    tools:context="com.example.administrator.droideye.ProcessMonitor.ProcessActivity">
 
     <!--<FrameLayout-->
         <!--android:layout_width="match_parent"-->
@@ -69,4 +69,4 @@
 
 
 
-</com.example.administrator.droideye.MainView>
+</com.example.administrator.droideye.ProcessMonitor.ProcessView>

@@ -6,10 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Button;
-import android.widget.TextView;
 
+import com.example.administrator.droideye.HOOKS.WakeUpActivity;
 import com.example.administrator.droideye.Models.Configuration;
+import com.example.administrator.droideye.ProcessMonitor.ProcessActivity;
+import com.example.administrator.droideye.ProcessMonitor.ProcessHandler;
 import com.example.administrator.droideye.Settings.SettingsActivity;
 import com.example.administrator.droideye.TrafficMonitor.TrafficInsActivity;
 
@@ -17,7 +18,7 @@ import com.example.administrator.droideye.TrafficMonitor.TrafficInsActivity;
  * Created by wand on 2016/12/30.
  */
 
-public class Entry extends AppCompatActivity implements View.OnClickListener{
+public class EntryActivity extends AppCompatActivity implements View.OnClickListener{
 
     ImageButton Monitor;
     ImageButton Traffic;
@@ -39,6 +40,8 @@ public class Entry extends AppCompatActivity implements View.OnClickListener{
         WakeUp.setOnClickListener(this);
         Setting.setOnClickListener(this);
 
+        ProcessHandler.init(this);
+        com.example.administrator.droideye.Settings.Setting.init(this);
 
     }
 
@@ -48,7 +51,7 @@ public class Entry extends AppCompatActivity implements View.OnClickListener{
         switch (view.getId()){
 
             case R.id.Monitor:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, ProcessActivity.class);
                 startActivity(intent);
                 break;
 
@@ -58,7 +61,7 @@ public class Entry extends AppCompatActivity implements View.OnClickListener{
                 break;
 
             case R.id.WakeUp:
-                Intent intent3 = new Intent(this, MainActivity.class);
+                Intent intent3 = new Intent(this, WakeUpActivity.class);
                 startActivity(intent3);
                 break;
 

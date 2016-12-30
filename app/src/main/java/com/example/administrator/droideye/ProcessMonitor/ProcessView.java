@@ -1,4 +1,4 @@
-package com.example.administrator.droideye;
+package com.example.administrator.droideye.ProcessMonitor;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,15 +16,17 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
+import com.example.administrator.droideye.R;
+
 import java.util.concurrent.Callable;
 
 /**
  * Created by Administrator on 2016/12/3.
  */
 
-public class MainView extends RelativeLayout {
+public class ProcessView extends RelativeLayout {
     private Context context;
-    public MainView(Context context, AttributeSet attrs) {
+    public ProcessView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
     }

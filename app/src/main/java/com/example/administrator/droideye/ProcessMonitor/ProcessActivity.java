@@ -1,7 +1,6 @@
-package com.example.administrator.droideye;
+package com.example.administrator.droideye.ProcessMonitor;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.util.Log;
 
 import com.example.administrator.droideye.Models.Configuration;
 import com.example.administrator.droideye.Models.StatusLogger;
+import com.example.administrator.droideye.R;
 import com.example.administrator.droideye.Service.MonitorService;
 
 import java.io.File;
@@ -17,7 +17,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
 
-public class MainActivity extends AppCompatActivity implements InteractionListener {
+public class ProcessActivity extends AppCompatActivity implements InteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity implements InteractionListen
         setContentView(R.layout.activity_main);
         StartWorks stwork = new StartWorks();
         stwork.start();
-        MainView mainView = (MainView) findViewById(R.id.activity_main);
-        mainView.init();
-        MainController mainController = new MainController(mainView,this);
+        ProcessView processView = (ProcessView) findViewById(R.id.activity_main);
+        processView.init();
+        ProcessController processController = new ProcessController(processView,this);
         startService(new Intent(this, MonitorService.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 

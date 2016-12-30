@@ -3,11 +3,7 @@ package com.example.administrator.droideye.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.util.TimeUtils;
-
-import com.example.administrator.droideye.KEY;
 
 
 public class StartUpReceiver extends BroadcastReceiver {

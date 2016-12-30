@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -16,12 +16,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/DroidEyeTheme">
-        <meta-data android:value="true" android:name="xposedmodule"/>
-        <meta-data android:value="42" android:name="xposedminversion"/>
-        <meta-data android:value="capture the battery usage with apps actions! " android:name="xposeddescription"/>
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="42" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="capture the battery usage with apps actions! " />
+
         <activity android:name=".TrafficMonitor.TrafficInsActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Entry">
+        <activity android:name=".ProcessMonitor.ProcessActivity" />
+        <activity android:name=".EntryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,35 +37,34 @@
         </activity>
         <activity android:name=".TrafficMonitor.TrafficDetailActivity" />
         <activity android:name=".Settings.SettingsActivity" />
+
         <service
             android:name=".Service.MonitorService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <receiver
             android:name=".Service.StartUpReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".HOOKS.ActivityReceiver"
-            android:exported="true" android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.example.administrator.droideye.STATS_REFRESHED_ACTION"/>
-                <action android:name="com.example.administrator.droideye.CREATE_FILES_ACTION"/>
-                <action android:name="com.example.administrator.droideye.RESET_FILES_ACTION"/>
-                <action android:name="com.example.administrator.droideye.PUSH_NETWORK_STATS"/>
+                <action android:name="com.example.administrator.droideye.STATS_REFRESHED_ACTION" />
+                <action android:name="com.example.administrator.droideye.CREATE_FILES_ACTION" />
+                <action android:name="com.example.administrator.droideye.RESET_FILES_ACTION" />
+                <action android:name="com.example.administrator.droideye.PUSH_NETWORK_STATS" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".HOOKS.XposedReceiver" />
 
-        <receiver android:name=".HOOKS.XposedReceiver"
-            />
-
+        <activity android:name=".HOOKS.WakeUpActivity"></activity>
     </application>
 
 </manifest>

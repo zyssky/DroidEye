@@ -1,17 +1,15 @@
 package com.example.administrator.droideye.Settings;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 
-import com.example.administrator.droideye.MyAdapter;
-import com.example.administrator.droideye.ProcessHandler;
+import com.example.administrator.droideye.ProcessMonitor.MyAdapter;
+import com.example.administrator.droideye.ProcessMonitor.ProcessHandler;
 import com.example.administrator.droideye.R;
 
 /**

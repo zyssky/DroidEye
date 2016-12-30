@@ -1,16 +1,16 @@
-package com.example.administrator.droideye;
+package com.example.administrator.droideye.ProcessMonitor;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.example.administrator.droideye.Settings.Setting;
 
 import java.io.Serializable;
 import java.util.List;

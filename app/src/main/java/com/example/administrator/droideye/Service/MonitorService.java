@@ -12,21 +12,18 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.example.administrator.droideye.KEY;
 import com.example.administrator.droideye.Models.DataBase.dbOpt;
 import com.example.administrator.droideye.Models.Traffic;
-import com.example.administrator.droideye.ProcessHandler;
+import com.example.administrator.droideye.ProcessMonitor.ProcessHandler;
 import com.example.administrator.droideye.R;
-import com.example.administrator.droideye.Setting;
-import com.example.administrator.droideye.TrafficMonitor.TrafficInsActivity;
+import com.example.administrator.droideye.Settings.Setting;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.administrator.droideye.ProcessHandler.TAG;
+import static com.example.administrator.droideye.ProcessMonitor.ProcessHandler.TAG;
 
 public class MonitorService extends Service {
     long sleeptime;

@@ -1,52 +1,46 @@
-package com.example.administrator.droideye;
+package com.example.administrator.droideye.ProcessMonitor;
 
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.example.administrator.droideye.HOOKS.*;
 
-import com.example.administrator.droideye.Models.Traffic;
-import com.example.administrator.droideye.Service.MonitorService;
+import com.example.administrator.droideye.R;
+import com.example.administrator.droideye.Settings.Setting;
 import com.example.administrator.droideye.Settings.SettingsActivity;
-import com.example.administrator.droideye.Views.ListFragment;
 import com.example.administrator.droideye.Models.Configuration;
 import com.example.administrator.droideye.TrafficMonitor.TrafficInsActivity;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.Callable;
 
-import static com.example.administrator.droideye.Setting.TAG;
+import static com.example.administrator.droideye.Settings.Setting.TAG;
 
 /**
  * Created by Administrator on 2016/12/3.
  */
 
-public class MainController implements View.OnClickListener,AdapterView.OnItemClickListener {
-    private MainView view;
+public class ProcessController implements View.OnClickListener,AdapterView.OnItemClickListener {
+    private ProcessView view;
     private InteractionListener listener;
     private SimpleAdapter simpleAdapter;
     private boolean includeSystem;
 
 //    private List<HashMap<String,Object>> runninglist;
 
-    public MainController(MainView view, InteractionListener listener){
+    public ProcessController(ProcessView view, InteractionListener listener){
         this.view = view;
         this.listener = listener;
-        ProcessHandler.init(listener.getActivity());
-        Setting.init(listener.getActivity());
+//        ProcessHandler.init(listener.getActivity());
+//        Setting.init(listener.getActivity());
         includeSystem = false;
 
 //        if(RootHelper.isDeviceRooted()) {
@@ -107,11 +101,6 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
         return simpleAdapter;
     }
 
-    private void setFragment(Fragment fragment){
-        FragmentTransaction fragmentTransaction = ((AppCompatActivity)listener.getActivity()).getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main, fragment);
-        fragmentTransaction.commit();
-    }
 
     private static int testposition = 0;
 
@@ -164,7 +153,7 @@ public class MainController implements View.OnClickListener,AdapterView.OnItemCl
         });
     }
 
-    public MainController getme(){
+    public ProcessController getme(){
 
         return this;
     }

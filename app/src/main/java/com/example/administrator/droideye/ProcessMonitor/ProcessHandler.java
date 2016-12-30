@@ -1,4 +1,4 @@
-package com.example.administrator.droideye;
+package com.example.administrator.droideye.ProcessMonitor;
 
 import android.app.ActivityManager;
 import android.app.usage.UsageStats;
@@ -14,6 +14,8 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.administrator.droideye.Settings.Setting;
 import com.jaredrummler.android.processes.ProcessManager;
 import com.jaredrummler.android.processes.models.AndroidAppProcess;
 

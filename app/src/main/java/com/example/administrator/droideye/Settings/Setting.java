@@ -1,16 +1,15 @@
-package com.example.administrator.droideye;
+package com.example.administrator.droideye.Settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
-import com.example.administrator.droideye.HOOKS.Wakelocks;
+import com.example.administrator.droideye.ProcessMonitor.ProcessHandler;
+import com.example.administrator.droideye.Utils.KEY;
 
 import java.util.List;
 import java.util.Map;
-
-import de.robv.android.xposed.XSharedPreferences;
 
 /**
  * Created by Administrator on 2016/12/16.

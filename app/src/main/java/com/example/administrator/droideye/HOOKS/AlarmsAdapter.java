@@ -2,32 +2,22 @@ package com.example.administrator.droideye.HOOKS;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
 
-import com.example.administrator.droideye.ProcessHandler;
+import com.example.administrator.droideye.ProcessMonitor.ProcessHandler;
 import com.example.administrator.droideye.R;
-import com.example.administrator.droideye.Setting;
+import com.example.administrator.droideye.Settings.Setting;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by rsteckler on 9/7/14.

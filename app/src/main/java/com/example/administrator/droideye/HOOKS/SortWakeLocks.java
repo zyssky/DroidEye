@@ -20,12 +20,12 @@ public class SortWakeLocks {
     //public final static int CAT_BLOCKING_MODE=0;
     //public final static int CAT_PACKAGE_MODE =1;
 
-//    public static Comparator<Entry<String, WakelockStats>> getMapComparator(final boolean byCount)
+//    public static Comparator<EntryActivity<String, WakelockStats>> getMapComparator(final boolean byCount)
 //    {
-//        return new Comparator<Entry<String, WakelockStats>>()
+//        return new Comparator<EntryActivity<String, WakelockStats>>()
 //        {
-//            public int compare(Entry<String, WakelockStats> o1,
-//                               Entry<String, WakelockStats> o2)
+//            public int compare(EntryActivity<String, WakelockStats> o1,
+//                               EntryActivity<String, WakelockStats> o2)
 //            {
 //                if (byCount)
 //                {
@@ -140,14 +140,14 @@ public class SortWakeLocks {
 //    public static HashMap<String, WakelockStats> sortByComparator(HashMap<String, WakelockStats> unsortMap, final boolean byCount)
 //    {
 //
-//        List<Entry<String, WakelockStats>> list = new LinkedList<Entry<String, WakelockStats>>(unsortMap.entrySet());
+//        List<EntryActivity<String, WakelockStats>> list = new LinkedList<EntryActivity<String, WakelockStats>>(unsortMap.entrySet());
 //
 //        // Sorting the list based on values
 //        Collections.sort(list, getMapComparator(byCount));
 //
 //        // Maintaining insertion order with the help of LinkedList
 //        HashMap<String, WakelockStats> sortedMap = new LinkedHashMap<String, WakelockStats>();
-//        for (Entry<String, WakelockStats> entry : list)
+//        for (EntryActivity<String, WakelockStats> entry : list)
 //        {
 //            sortedMap.put(entry.getKey(), entry.getValue());
 //        }

@@ -6,7 +6,6 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.SimpleAdapter;
 
-import com.example.administrator.droideye.MainController;
 import com.example.administrator.droideye.Models.Configuration;
 import com.example.administrator.droideye.R;
 
