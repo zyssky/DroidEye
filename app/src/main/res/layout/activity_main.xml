@@ -39,13 +39,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="XPOSE"
+        android:text="Normal"
         android:id="@+id/test"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="showTraffic"
+        android:text="System"
         android:layout_toRightOf="@id/test"
         android:layout_marginLeft="20dp"
         android:id="@+id/showtraffic"/>
