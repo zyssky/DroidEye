@@ -37,21 +37,22 @@ public class SettingsController implements AdapterView.OnItemClickListener{
         //adding adapters here.
         SettingsAdapter settingsAdapter = new SettingsAdapter(settingsListener.getAppContext());
 
-        List<Map<String, ?>> security = new LinkedList<Map<String, ?>>();
-        security.add(createItem("process_item",
+        List<Map<String, ?>> security2 = new LinkedList<Map<String, ?>>();
+        security2.add(createItem("process_item",
                 "查看当前运行进程，管理进程项"));
-        security.add(createItem("setting_permission",
+        security2.add(createItem("setting_permission",
                 "管理进程权限，是否可以杀死进程"));
-        security.add(createItem("process_whitelist",
+        security2.add(createItem("process_whitelist",
                 "进程监控白名单设置"));
-        security.add(createItem("daemon_process",
+        security2.add(createItem("daemon_process",
                 "管理后台进程，进程唤醒"));
 
-        settingsAdapter.addSection("进程监控", new SimpleAdapter(settingsListener.getAppContext(), security,
+        settingsAdapter.addSection("进程监控", new SimpleAdapter(settingsListener.getAppContext(), security2,
                 R.layout.list_complex,
                 new String[] { "title", "caption" }, new int[] {
                 R.id.list_complex_title, R.id.list_complex_caption }));
 
+        List<Map<String, ?>> security = new LinkedList<Map<String, ?>>();
         security.clear();
         security.add(createItem("traffic_overlook",
                 "查看流量统计数据"));

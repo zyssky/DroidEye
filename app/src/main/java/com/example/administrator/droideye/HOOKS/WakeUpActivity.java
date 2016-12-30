@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.administrator.droideye.R;
@@ -14,7 +15,7 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button alarm;
     private Button service;
-    private Button wakelock;
+    private ImageButton wakelock;
     private ListView listView;
 
     @Override
@@ -23,7 +24,7 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_wake_up);
         alarm = (Button) findViewById(R.id.alarm);
         service = (Button) findViewById(R.id.service);
-        wakelock = (Button) findViewById(R.id.wakeup);
+        wakelock = (ImageButton) findViewById(R.id.wakeup);
         listView = (ListView) findViewById(R.id.wakeuplist);
         listView.setAdapter(generateVariousAdapter(AlarmsAdapter.ALARMS));
         alarm.setOnClickListener(this);
