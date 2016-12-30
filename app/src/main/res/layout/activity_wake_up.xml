@@ -20,23 +20,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/alarm"
-            android:background="@drawable/alerticon"
+            android:background="@drawable/coaching"
             android:layout_marginLeft="30dp"/>
-
-        <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/services"
-            android:id="@+id/service"/>
-
-        <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/wakeup"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/ic_wakelock"/>
-
 
 
     </android.support.v7.widget.Toolbar>

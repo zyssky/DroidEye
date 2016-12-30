@@ -14,8 +14,8 @@ import java.io.File;
 public class WakeUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button alarm;
-    private Button service;
-    private Button wakelock;
+//    private Button service;
+//    private Button wakelock;
     private ListView listView;
 
     @Override
@@ -23,13 +23,13 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wake_up);
         alarm = (Button) findViewById(R.id.alarm);
-        service = (Button) findViewById(R.id.service);
-        wakelock = (Button) findViewById(R.id.wakeup);
+//        service = (Button) findViewById(R.id.service);
+//        wakelock = (Button) findViewById(R.id.wakeup);
         listView = (ListView) findViewById(R.id.wakeuplist);
         listView.setAdapter(generateVariousAdapter(AlarmsAdapter.ALARMS));
         alarm.setOnClickListener(this);
-        service.setOnClickListener(this);
-        wakelock.setOnClickListener(this);
+//        service.setOnClickListener(this);
+//        wakelock.setOnClickListener(this);
     }
 
     public AlarmsAdapter generateVariousAdapter(int adapterType) {
@@ -49,18 +49,22 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    public static int position = 0;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.alarm:
-                listView.setAdapter(generateVariousAdapter(AlarmsAdapter.ALARMS));
+                position+=1;
+                position%=3;
+                listView.setAdapter(generateVariousAdapter(position));
                 break;
-            case R.id.service:
-                listView.setAdapter(generateVariousAdapter(AlarmsAdapter.SERVICES));
-                break;
-            case R.id.wakeup:
-                listView.setAdapter(generateVariousAdapter(AlarmsAdapter.WAKELOCKS));
-                break;
+//            case R.id.service:
+//                listView.setAdapter(generateVariousAdapter(AlarmsAdapter.SERVICES));
+//                break;
+//            case R.id.wakeup:
+//                listView.setAdapter(generateVariousAdapter(AlarmsAdapter.WAKELOCKS));
+//                break;
         }
     }
     public boolean isUnbounceServiceRunning() {
