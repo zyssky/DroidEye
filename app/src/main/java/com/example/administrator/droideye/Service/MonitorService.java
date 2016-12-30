@@ -49,7 +49,7 @@ public class MonitorService extends Service {
         List<Traffic> traffics = dbopt.userdef_query("traffic", "SELECT * FROM traffic", null);
         trafficMonit trafficMonitor = new trafficMonit(dbopt, traffics);
         trafficMonitor.start();
-        showNotice();
+//        showNotice();
         Log.d(TAG, "onStartCommand: "+sleeptime);
         return super.onStartCommand(intent, flags, startId);
     }
