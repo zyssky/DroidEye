@@ -47,21 +47,20 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
 
-        android:background="@drawable/ic_includesystem"
+        android:background="@drawable/system"
         android:layout_toRightOf="@id/test"
         android:layout_marginLeft="25dp"
         android:id="@+id/showtraffic"/>
 
 
     <ImageButton
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/settings"
         android:background="#00000000"
         android:scaleType="fitCenter"
         android:layout_toRightOf="@id/showtraffic"
-        android:layout_marginLeft="65dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="165dp"
         android:id="@+id/settings"
         />
 
