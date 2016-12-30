@@ -90,8 +90,8 @@ public class MonitorService extends Service {
     public void showNotice(){
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        CharSequence title = "Hello";
-        int icon = R.drawable.logo;
+        CharSequence title = "当日流量为74MB，已超出设定！";
+        int icon = R.drawable.alerticon;
         long when = System.currentTimeMillis();
         Notification notice = new Notification(icon, title , when + 1000);
         notice.defaults |= Notification.DEFAULT_SOUND;
