@@ -37,7 +37,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toRightOf="@id/service"
-            android:layout_marginLeft="15dp"
+
+            android:text="Wakeup"
             android:id="@+id/wakeup"
             android:src="@drawable/ic_wakelock" />
 
